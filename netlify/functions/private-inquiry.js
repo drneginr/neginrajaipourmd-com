@@ -67,7 +67,7 @@ export default async (event) => {
     const html = await renderEmail(firstEmail.body, firstEmail.subject, unsubscribeToken);
 
     await resend.emails.send({
-      from: 'Dr. Negin Rajaipour, MD <hello@neginrajaipourmd.com>',
+      from: 'Dr. Negin Rajaipour, MD <office@neginrajaipourmd.com>',
       to: email,
       subject: firstEmail.subject,
       html: html,

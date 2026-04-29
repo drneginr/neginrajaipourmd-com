@@ -13,7 +13,7 @@ export default async (req, context) => {
 
     // Send email via Resend
     const data = await resend.emails.send({
-      from: 'Dr. Negin Rajaipour, MD <hello@neginrajaipourmd.com>',
+      from: 'Dr. Negin Rajaipour, MD <office@neginrajaipourmd.com>',
       to: [to],
       subject: subject,
       html: html,
