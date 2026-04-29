@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Practice Constraint Diagnostic - Identify what's limiting your healthcare practice growth">
+  <title>Practice Diagnostic | Dr. Negin Rajaipour, MD</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .diagnostic-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+    }
+
+    .question-card {
+      background: var(--cream);
+      padding: 2rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+      display: none;
+    }
+
+    .question-card.active {
+      display: block;
+      animation: fadeIn 0.3s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .question-number {
+      color: var(--gold);
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.875rem;
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+    }
+
+    .question-text {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      color: var(--charcoal);
+      margin-bottom: 2rem;
+      line-height: 1.4;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .option {
+      background: var(--white);
+      padding: 1.5rem;
+      border: 2px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .option:hover {
+      border-color: var(--gold);
+      background: var(--cream);
+    }
+
+    .option.selected {
+      border-color: var(--gold);
+      background: var(--gold);
+      color: var(--charcoal);
+      font-weight: 500;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 6px;
+      background: var(--border);
+      border-radius: 3px;
+      margin-bottom: 3rem;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--gold);
+      transition: width 0.3s ease;
+      width: 0%;
+    }
+
+    .navigation {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 2rem;
+    }
+
+    .result-container {
+      display: none;
+      text-align: center;
+    }
+
+    .result-container.active {
+      display: block;
+    }
+
+    .constraint-badge {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--charcoal);
+      padding: 1rem 2rem;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.25rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-radius: 4px;
+      margin: 2rem 0;
+    }
+
+    .result-description {
+      background: var(--cream);
+      padding: 2.5rem;
+      border-radius: 8px;
+      margin: 2rem 0;
+      text-align: left;
+    }
+
+    .result-description h3 {
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .email-form {
+      margin-top: 3rem;
+      padding: 2rem;
+      background: var(--white);
+      border: 2px solid var(--gold);
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav class="container">
+      <div class="logo">
+        Dr. Negin Rajaipour, MD
+      </div>
+      <button class="menu-toggle" aria-label="Toggle menu">☰</button>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/#about">About</a></li>
+        <li><a href="/#advisory">Advisory</a></li>
+        <li><a href="/diagnostic/">Diagnostic</a></li>
+        <li><a href="/private-inquiry.html">Private Inquiry</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero" style="padding: 5rem 2rem 3rem;">
+    <div class="hero-content">
+      <span class="tag">Practice Diagnostic</span>
+      <h1 style="margin-top: 1.5rem;">What's Constraining Your Practice Growth?</h1>
+      <p class="lead" style="margin: 1.5rem auto; max-width: 650px;">
+        10 questions to identify your primary constraint pattern and receive a personalized 2-page diagnostic brief.
+      </p>
+    </div>
+  </section>
+
+  <div class="diagnostic-container">
+    <!-- Progress Bar -->
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <!-- Question Cards -->
+    <div id="questionContainer">
+      <!-- Questions will be injected by JavaScript -->
+    </div>
+
+    <!-- Result View -->
+    <div class="result-container" id="resultContainer">
+      <h2>Your Primary Constraint:</h2>
+      <div class="constraint-badge" id="constraintName"></div>
+
+      <div class="result-description" id="resultDescription">
+        <!-- Result details will be injected here -->
+      </div>
+
+      <div class="email-form">
+        <h3 style="margin-bottom: 1rem;">Get Your Personalized 2-Page Diagnostic Brief</h3>
+        <p style="color: var(--slate); margin-bottom: 1.5rem;">
+          Enter your email to receive a detailed PDF analysis of your constraint pattern, including specific strategies and next steps.
+        </p>
+
+        <form id="pdfRequestForm">
+          <div class="form-group">
+            <input type="text" id="firstName" name="firstName" placeholder="First Name" required style="margin-bottom: 1rem;">
+          </div>
+          <div class="form-group">
+            <input type="email" id="email" name="email" placeholder="Email Address" required style="margin-bottom: 1.5rem;">
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%;">
+            Send My Diagnostic Brief
+          </button>
+        </form>
+
+        <div id="emailSuccess" style="display: none; margin-top: 1.5rem; padding: 1.5rem; background: var(--cream); border-radius: 4px;">
+          <p style="color: var(--gold); font-weight: 600; margin: 0;">
+            ✓ Check your inbox! Your personalized diagnostic brief is on its way.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 VitaRegen Medical™. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <script src="/diagnostic/diagnostic.js"></script>
+
+</body>
+</html>
