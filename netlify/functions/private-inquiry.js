@@ -1,8 +1,22 @@
-const { Resend } = require('resend');
+import { Resend } from 'resend';
+import { getStore } from '@netlify/blobs';
+import { sequences, getBaseTemplate } from './email-data.js';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-exports.handler = async (event) => {
+// Render email with base template
+async function renderEmail(bodyContent, subject, unsubscribeToken) {
+  let template = getBaseTemplate();
+
+  template = template.replace('{{SUBJECT}}', subject);
+  template = template.replace('{{BODY_CONTENT}}', bodyContent);
+  template = template.replace('{{PHYSICAL_ADDRESS}}', process.env.BUSINESS_ADDRESS || '1615 Mater Dei Drive, Chula Vista, CA 91913');
+  template = template.replace('{{UNSUBSCRIBE_LINK}}', `https://neginrajaipourmd.com/unsubscribe?token=${unsubscribeToken}`);
+
+  return template;
+}
+
+export default async (event) => {
   // Only allow POST
   if (event.httpMethod !== 'POST') {
     return {
@@ -23,19 +37,46 @@ exports.handler = async (event) => {
       };
     }
 
-    // Add contact to Resend audience (if AUDIENCE_ID is provided)
-    if (process.env.RESEND_AUDIENCE_ID) {
-      try {
-        await resend.contacts.create({
-          email: email,
-          firstName: firstName,
-          audienceId: process.env.RESEND_AUDIENCE_ID,
-        });
-      } catch (contactError) {
-        console.error('Contact creation error:', contactError);
-        // Continue even if contact creation fails (might already exist)
-      }
-    }
+    // Enroll in email sequence
+    const contactsStore = getStore('contacts');
+    const timestamp = new Date().toISOString();
+    const unsubscribeToken = Buffer.from(email).toString('base64');
+
+    const contactData = {
+      email,
+      name: firstName,
+      phone,
+      organization,
+      role,
+      inquiryType,
+      timeline,
+      message: message || '',
+      source: 'private-inquiry',
+      sequenceType: 'advisory',
+      enrolledAt: timestamp,
+      currentEmailIndex: 0,
+      subscribed: true,
+      unsubscribeToken
+    };
+
+    await contactsStore.set(email, JSON.stringify(contactData));
+
+    // Send immediate welcome email (Email 1 of sequence)
+    const sequenceData = sequences['advisory'];
+    const firstEmail = sequenceData[0];
+    const html = await renderEmail(firstEmail.body, firstEmail.subject, unsubscribeToken);
+
+    await resend.emails.send({
+      from: 'Dr. Negin Rajaipour, MD <hello@neginrajaipourmd.com>',
+      to: email,
+      subject: firstEmail.subject,
+      html: html,
+    });
+
+    // Update contact to reflect first email sent
+    contactData.currentEmailIndex = 1;
+    contactData.lastEmailSent = timestamp;
+    await contactsStore.set(email, JSON.stringify(contactData));
 
     // Send notification email to Dr. Rajaipour
     await resend.emails.send({
@@ -56,48 +97,7 @@ exports.handler = async (event) => {
         ${message ? `<p><strong>Additional Details:</strong><br>${message}</p>` : ''}
 
         <hr style="margin: 2rem 0; border: none; border-top: 1px solid #ddd;">
-        <p style="font-size: 0.9rem; color: #666;">Submitted from neginrajaipourmd.com</p>
-      `,
-    });
-
-    // Send confirmation email to the inquirer
-    await resend.emails.send({
-      from: 'Dr. Negin Rajaipour <hello@neginrajaipourmd.com>',
-      to: email,
-      subject: 'Thank you for your inquiry',
-      html: `
-        <div style="font-family: 'Cormorant Garamond', Georgia, serif; max-width: 600px; margin: 0 auto; padding: 2rem;">
-          <h1 style="color: #C9A35E; font-size: 2rem; margin-bottom: 1.5rem;">Thank You for Reaching Out</h1>
-
-          <p style="font-size: 1.1rem; line-height: 1.7; color: #1A1A1A;">Dear ${firstName},</p>
-
-          <p style="font-size: 1.1rem; line-height: 1.7; color: #1A1A1A;">
-            Thank you for your inquiry regarding <strong>${inquiryType}</strong>. I have received your message and will review it carefully.
-          </p>
-
-          <p style="font-size: 1.1rem; line-height: 1.7; color: #1A1A1A;">
-            I typically respond to all inquiries within 48 hours. In the meantime, feel free to explore additional resources on my website.
-          </p>
-
-          <div style="margin: 2.5rem 0; padding: 1.5rem; background: #F5F1EA; border-left: 4px solid #C9A35E;">
-            <p style="font-style: italic; color: #555; margin: 0;">
-              "Strategic clarity for those who lead at the edge."
-            </p>
-          </div>
-
-          <p style="font-size: 1.1rem; line-height: 1.7; color: #1A1A1A;">
-            Best regards,<br>
-            <strong>Dr. Negin Rajaipour, MD</strong><br>
-            <span style="color: #666; font-size: 0.95rem;">Founder & CEO, VitaRegen Medical™</span>
-          </p>
-
-          <hr style="margin: 2rem 0; border: none; border-top: 1px solid #ddd;">
-
-          <p style="font-size: 0.85rem; color: #888; line-height: 1.5;">
-            © 2026 VitaRegen Medical™. All Rights Reserved.<br>
-            This email is for advisory and informational purposes only.
-          </p>
-        </div>
+        <p style="font-size: 0.9rem; color: #666;">Submitted from neginrajaipourmd.com<br>Contact enrolled in advisory email sequence.</p>
       `,
     });
 
@@ -113,4 +113,8 @@ exports.handler = async (event) => {
       body: JSON.stringify({ error: 'Failed to process inquiry', details: error.message }),
     };
   }
+};
+
+export const config = {
+  path: '/api/private-inquiry'
 };

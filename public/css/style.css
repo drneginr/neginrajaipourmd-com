@@ -3,23 +3,24 @@
    Design System & Base Styles
    ═══════════════════════════════════════ */
 
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@300;400;600;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap');
 
 /* ═══ CSS VARIABLES ═══ */
 :root {
-  /* Colors - Professional Medical Executive Palette */
-  --ivory: #FAFAFA;
-  --cream: #F5F1EA;
-  --gold: #C9A35E;
+  /* Colors - Minimalist Clinical Modern Palette */
+  --black: #000000;
   --charcoal: #1A1A1A;
-  --slate: #555555;
-  --border: #DDDDDD;
+  --gray-dark: #333333;
+  --gray: #666666;
+  --gray-light: #999999;
+  --gray-lighter: #CCCCCC;
+  --gray-bg: #F8F8F8;
   --white: #FFFFFF;
+  --border: #E5E5E5;
 
   /* Typography */
   --font-serif: 'Cormorant Garamond', serif;
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-display: 'Montserrat', sans-serif;
 
   /* Spacing */
   --space-xs: 0.5rem;
@@ -93,7 +94,7 @@ p {
 p.lead {
   font-size: 1.25rem;
   line-height: 1.6;
-  color: var(--slate);
+  color: var(--gray);
   font-family: var(--font-serif);
   font-style: italic;
 }
@@ -105,7 +106,7 @@ a {
 }
 
 a:hover {
-  color: var(--gold);
+  color: var(--gray-dark);
 }
 
 /* ═══ HEADER & NAVIGATION ═══ */
@@ -151,7 +152,7 @@ header .nav-links a {
 }
 
 header .nav-links a:hover {
-  color: var(--gold);
+  color: var(--gray);
 }
 
 .menu-toggle {
@@ -167,7 +168,7 @@ header .nav-links a:hover {
 .hero {
   padding: 8rem 2rem;
   text-align: center;
-  background: linear-gradient(180deg, var(--cream) 0%, var(--white) 100%);
+  background: var(--white);
   position: relative;
   overflow: hidden;
 }
@@ -185,7 +186,7 @@ header .nav-links a:hover {
 .hero h1 em {
   font-style: italic;
   font-weight: 400;
-  color: var(--gold);
+  color: var(--gray-dark);
 }
 
 .hero .lead {
@@ -218,9 +219,9 @@ header .nav-links a:hover {
 }
 
 .btn-primary {
-  background-color: var(--gold);
+  background-color: var(--gray-dark);
   color: var(--charcoal);
-  border-color: var(--gold);
+  border-color: var(--gray-dark);
 }
 
 .btn-primary:hover {
@@ -290,7 +291,7 @@ section {
   border-bottom: 1px solid var(--border);
   font-family: var(--font-sans);
   font-size: 1rem;
-  color: var(--slate);
+  color: var(--gray);
 }
 
 .credentials-list li:last-child {
@@ -307,7 +308,7 @@ section {
 
 .service-card {
   padding: 2.5rem;
-  background: var(--cream);
+  background: var(--gray-bg);
   border-radius: 8px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -324,7 +325,7 @@ section {
 }
 
 .service-card p {
-  color: var(--slate);
+  color: var(--gray);
   font-size: 1rem;
   line-height: 1.7;
 }
@@ -333,7 +334,7 @@ section {
   display: inline-block;
   margin-top: 1rem;
   padding: 0.5rem 1rem;
-  background: var(--gold);
+  background: var(--gray-dark);
   color: var(--charcoal);
   font-family: var(--font-display);
   font-weight: 700;
@@ -357,13 +358,13 @@ section {
   border: 1px solid var(--border);
   border-radius: 4px;
   font-size: 1rem;
-  color: var(--slate);
+  color: var(--gray);
   transition: all 0.3s ease;
 }
 
 .focus-list li:hover {
-  border-color: var(--gold);
-  background: var(--cream);
+  border-color: var(--gray-dark);
+  background: var(--gray-bg);
 }
 
 /* ═══ FORMS ═══ */
@@ -405,7 +406,7 @@ input:focus,
 select:focus,
 textarea:focus {
   outline: none;
-  border-color: var(--gold);
+  border-color: var(--gray-dark);
 }
 
 textarea {
@@ -415,7 +416,7 @@ textarea {
 
 .form-disclaimer {
   font-size: 0.8rem;
-  color: var(--slate);
+  color: var(--gray);
   margin-top: 1rem;
   line-height: 1.5;
 }
@@ -439,7 +440,7 @@ footer p {
 }
 
 footer a {
-  color: var(--gold);
+  color: var(--gray-dark);
 }
 
 footer a:hover {
@@ -461,7 +462,7 @@ footer a:hover {
 }
 
 .social-links a:hover {
-  color: var(--gold);
+  color: var(--gray-dark);
 }
 
 /* ═══ RESPONSIVE ═══ */
@@ -505,7 +506,7 @@ footer a:hover {
 .tag {
   display: inline-block;
   background: var(--charcoal);
-  color: var(--gold);
+  color: var(--gray-dark);
   padding: 0.5rem 1.5rem;
   font-family: var(--font-display);
   font-weight: 800;
@@ -523,6 +524,6 @@ footer a:hover {
 }
 
 .highlight {
-  color: var(--gold);
+  color: var(--gray-dark);
   font-style: italic;
 }

@@ -1,6 +1,14 @@
 [build]
   publish = "public"
   functions = "netlify/functions"
+  command = "echo 'Static site - no build required'"
+
+[build.environment]
+  NODE_VERSION = "24"
+
+[functions]
+  node_bundler = "zisi"
+  included_files = ["netlify/functions/email-templates/**"]
 
 [[redirects]]
   from = "/api/*"
