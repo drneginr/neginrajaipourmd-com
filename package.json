@@ -1,0 +1,20 @@
+{
+  "name": "neginrajaipourmd-com",
+  "version": "1.0.0",
+  "description": "Dr. Negin Rajaipour, MD - Official Website",
+  "main": "index.js",
+  "scripts": {
+    "dev": "netlify dev",
+    "build": "echo 'No build step required for static site'",
+    "deploy": "netlify deploy --prod"
+  },
+  "keywords": ["negin-rajaipour", "vitaregen-medical", "e3-method"],
+  "author": "Dr. Negin Rajaipour, MD",
+  "license": "UNLICENSED",
+  "private": true,
+  "type": "commonjs",
+  "dependencies": {
+    "@netlify/functions": "^5.2.0",
+    "resend": "^6.12.2"
+  }
+}

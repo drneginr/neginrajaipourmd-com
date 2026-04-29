@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Private inquiry for retainer engagements, practice development, speaking, media, and custom scope with Dr. Negin Rajaipour, MD">
+  <title>Private Inquiry | Dr. Negin Rajaipour, MD</title>
+
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" type="image/x-icon" href="/assets/logos/favicon.ico">
+</head>
+<body>
+
+  <!-- ═══ HEADER & NAVIGATION ═══ -->
+  <header>
+    <nav class="container">
+      <div class="logo">
+        Dr. Negin Rajaipour, MD
+      </div>
+      <button class="menu-toggle" aria-label="Toggle menu">☰</button>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/#about">About</a></li>
+        <li><a href="/#advisory">Advisory</a></li>
+        <li><a href="/#focus">Areas of Focus</a></li>
+        <li><a href="/private-inquiry.html">Private Inquiry</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ═══ PAGE HEADER ═══ -->
+  <section class="hero" style="padding: 5rem 2rem;">
+    <div class="hero-content">
+      <span class="tag">Private Inquiry</span>
+      <h1 style="margin-top: 1.5rem;">Let's Discuss Your Needs</h1>
+      <p class="lead" style="margin: 1.5rem auto; max-width: 600px;">For retainer engagements, practice development, speaking, media, and custom scope. Session-based advisory can be booked directly via the calendar link.</p>
+    </div>
+  </section>
+
+  <!-- ═══ INQUIRY FORM ═══ -->
+  <section class="container-narrow" style="padding: 3rem 2rem 5rem;">
+    <form id="inquiry-form" action="/api/private-inquiry" method="POST">
+      <div class="form-group">
+        <label for="firstName">First Name *</label>
+        <input type="text" id="firstName" name="firstName" required>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address *</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Phone Number *</label>
+        <input type="tel" id="phone" name="phone" required>
+      </div>
+
+      <div class="form-group">
+        <label for="organization">Organization / Outlet *</label>
+        <input type="text" id="organization" name="organization" required>
+      </div>
+
+      <div class="form-group">
+        <label for="role">Role / Title *</label>
+        <input type="text" id="role" name="role" required>
+      </div>
+
+      <div class="form-group">
+        <label for="inquiryType">Nature of Inquiry *</label>
+        <select id="inquiryType" name="inquiryType" required>
+          <option value="">Select an option...</option>
+          <option value="healthcare-practice">Healthcare Practice Development (retainer or project)</option>
+          <option value="executive-advisory">Executive Advisory (retainer)</option>
+          <option value="speaking">Speaking Engagement / Keynote</option>
+          <option value="podcast">Podcast Interview</option>
+          <option value="media">Media / Expert Commentary</option>
+          <option value="corporate-wellness">Corporate Wellness or Training</option>
+          <option value="licensing">Licensing / IP (The E3 Method™)</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="timeline">Preferred Timeline *</label>
+        <select id="timeline" name="timeline" required>
+          <option value="">Select an option...</option>
+          <option value="2-weeks">Within 2 weeks</option>
+          <option value="1-month">Within 1 month</option>
+          <option value="1-3-months">1–3 months</option>
+          <option value="flexible">Flexible / Exploring</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="message">Additional Details (Optional)</label>
+        <textarea id="message" name="message" rows="5"></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Submit Inquiry</button>
+
+      <p class="form-disclaimer">
+        The services offered through this website are advisory and informational conversations only. These are not medical visits, do not establish a physician-patient relationship, and do not include diagnosis or treatment. Your information is kept confidential and will never be shared.
+      </p>
+    </form>
+
+    <div id="form-success" style="display: none; text-align: center; padding: 3rem 2rem; background: var(--cream); border-radius: 8px; margin-top: 2rem;">
+      <h2 style="color: var(--gold); margin-bottom: 1rem;">Thank You!</h2>
+      <p class="lead">Your inquiry has been received. Dr. Rajaipour will review your message and respond within 48 hours.</p>
+      <p style="margin-top: 2rem;"><a href="/" class="btn btn-secondary">Return to Homepage</a></p>
+    </div>
+  </section>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer>
+    <div class="container">
+      <ul class="social-links">
+        <li><a href="https://linkedin.com" target="_blank" aria-label="LinkedIn">LinkedIn</a></li>
+        <li><a href="https://instagram.com" target="_blank" aria-label="Instagram">Instagram</a></li>
+      </ul>
+
+      <p>&copy; 2026 VitaRegen Medical™. All Rights Reserved.</p>
+      <p style="font-size: 0.8rem; margin-top: 1rem;">The services offered through this website are advisory and informational conversations only.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+
+    menuToggle.addEventListener('click', () => {
+      navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+    });
+
+    // Form submission
+    const form = document.getElementById('inquiry-form');
+    const successMessage = document.getElementById('form-success');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData);
+
+      try {
+        const response = await fetch('/api/private-inquiry', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+
+        if (response.ok) {
+          form.style.display = 'none';
+          successMessage.style.display = 'block';
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          alert('There was an error submitting your inquiry. Please try again or contact us directly.');
+        }
+      } catch (error) {
+        console.error('Form submission error:', error);
+        alert('There was an error submitting your inquiry. Please try again or contact us directly.');
+      }
+    });
+  </script>
+
+</body>
+</html>
