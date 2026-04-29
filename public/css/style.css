@@ -7,16 +7,17 @@
 
 /* ═══ CSS VARIABLES ═══ */
 :root {
-  /* Colors - Minimalist Clinical Modern Palette */
-  --black: #000000;
-  --charcoal: #1A1A1A;
-  --gray-dark: #333333;
-  --gray: #666666;
-  --gray-light: #999999;
-  --gray-lighter: #CCCCCC;
-  --gray-bg: #F8F8F8;
+  /* Colors - Executive Advisory Palette */
+  --navy: #1A2B3C;
+  --navy-dark: #0F1A26;
+  --navy-light: #2A3F54;
+  --gold: #C9A35E;
+  --gold-light: #D4B574;
+  --cream: #F5F1EA;
+  --ivory: #FAFAFA;
   --white: #FFFFFF;
-  --border: #E5E5E5;
+  --text-light: #E8E6E1;
+  --border: #3A4F64;
 
   /* Typography */
   --font-serif: 'Cormorant Garamond', serif;
@@ -50,8 +51,8 @@ body {
   font-family: var(--font-sans);
   font-weight: 400;
   line-height: 1.7;
-  color: var(--charcoal);
-  background-color: var(--white);
+  color: var(--text-light);
+  background-color: var(--navy);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -63,6 +64,7 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.2;
   margin-bottom: var(--space-sm);
   letter-spacing: 0.01em;
+  color: var(--white);
 }
 
 h1 {
@@ -94,24 +96,24 @@ p {
 p.lead {
   font-size: 1.25rem;
   line-height: 1.6;
-  color: var(--gray);
+  color: var(--cream);
   font-family: var(--font-serif);
   font-style: italic;
 }
 
 a {
-  color: var(--charcoal);
+  color: var(--gold);
   text-decoration: none;
   transition: all 0.2s ease;
 }
 
 a:hover {
-  color: var(--gray-dark);
+  color: var(--gold);
 }
 
 /* ═══ HEADER & NAVIGATION ═══ */
 header {
-  background-color: var(--white);
+  background-color: var(--navy);
   border-bottom: 1px solid var(--border);
   position: sticky;
   top: 0;
@@ -132,7 +134,7 @@ header .logo {
   font-family: var(--font-serif);
   font-size: 1.5rem;
   font-weight: 600;
-  color: var(--charcoal);
+  color: var(--white);
   letter-spacing: 0.02em;
 }
 
@@ -147,12 +149,12 @@ header .nav-links a {
   font-size: 0.95rem;
   font-weight: 500;
   letter-spacing: 0.03em;
-  color: var(--charcoal);
+  color: var(--cream);
   transition: color 0.2s ease;
 }
 
 header .nav-links a:hover {
-  color: var(--gray);
+  color: var(--cream);
 }
 
 .menu-toggle {
@@ -161,14 +163,14 @@ header .nav-links a:hover {
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
-  color: var(--charcoal);
+  color: var(--white);
 }
 
 /* ═══ HERO SECTION ═══ */
 .hero {
   padding: 8rem 2rem;
   text-align: center;
-  background: var(--white);
+  background: var(--navy);
   position: relative;
   overflow: hidden;
 }
@@ -186,7 +188,7 @@ header .nav-links a:hover {
 .hero h1 em {
   font-style: italic;
   font-weight: 400;
-  color: var(--gray-dark);
+  color: var(--gold);
 }
 
 .hero .lead {
@@ -207,10 +209,10 @@ header .nav-links a:hover {
 .btn {
   display: inline-block;
   padding: 1rem 2.5rem;
-  font-family: var(--font-display);
-  font-weight: 700;
+  font-family: var(--font-sans);
+  font-weight: 600;
   font-size: 0.875rem;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   border-radius: 4px;
   cursor: pointer;
@@ -219,26 +221,26 @@ header .nav-links a:hover {
 }
 
 .btn-primary {
-  background-color: var(--gray-dark);
-  color: var(--charcoal);
-  border-color: var(--gray-dark);
+  background-color: var(--gold);
+  color: var(--navy);
+  border-color: var(--gold);
 }
 
 .btn-primary:hover {
-  background-color: var(--charcoal);
-  color: var(--white);
-  border-color: var(--charcoal);
+  background-color: var(--gold-light);
+  color: var(--navy);
+  border-color: var(--gold-light);
 }
 
 .btn-secondary {
   background-color: transparent;
-  color: var(--charcoal);
-  border-color: var(--charcoal);
+  color: var(--gold);
+  border-color: var(--gold);
 }
 
 .btn-secondary:hover {
-  background-color: var(--charcoal);
-  color: var(--white);
+  background-color: var(--gold);
+  color: var(--navy);
 }
 
 /* ═══ SECTIONS ═══ */
@@ -291,7 +293,7 @@ section {
   border-bottom: 1px solid var(--border);
   font-family: var(--font-sans);
   font-size: 1rem;
-  color: var(--gray);
+  color: var(--cream);
 }
 
 .credentials-list li:last-child {
@@ -308,7 +310,7 @@ section {
 
 .service-card {
   padding: 2.5rem;
-  background: var(--gray-bg);
+  background: var(--navy-dark);
   border-radius: 8px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -325,7 +327,7 @@ section {
 }
 
 .service-card p {
-  color: var(--gray);
+  color: var(--cream);
   font-size: 1rem;
   line-height: 1.7;
 }
@@ -334,7 +336,7 @@ section {
   display: inline-block;
   margin-top: 1rem;
   padding: 0.5rem 1rem;
-  background: var(--gray-dark);
+  background: var(--gold);
   color: var(--charcoal);
   font-family: var(--font-display);
   font-weight: 700;
@@ -358,13 +360,13 @@ section {
   border: 1px solid var(--border);
   border-radius: 4px;
   font-size: 1rem;
-  color: var(--gray);
+  color: var(--cream);
   transition: all 0.3s ease;
 }
 
 .focus-list li:hover {
-  border-color: var(--gray-dark);
-  background: var(--gray-bg);
+  border-color: var(--gold);
+  background: var(--navy-dark);
 }
 
 /* ═══ FORMS ═══ */
@@ -406,7 +408,7 @@ input:focus,
 select:focus,
 textarea:focus {
   outline: none;
-  border-color: var(--gray-dark);
+  border-color: var(--gold);
 }
 
 textarea {
@@ -416,7 +418,7 @@ textarea {
 
 .form-disclaimer {
   font-size: 0.8rem;
-  color: var(--gray);
+  color: var(--cream);
   margin-top: 1rem;
   line-height: 1.5;
 }
@@ -440,7 +442,7 @@ footer p {
 }
 
 footer a {
-  color: var(--gray-dark);
+  color: var(--gold);
 }
 
 footer a:hover {
@@ -462,7 +464,7 @@ footer a:hover {
 }
 
 .social-links a:hover {
-  color: var(--gray-dark);
+  color: var(--gold);
 }
 
 /* ═══ RESPONSIVE ═══ */
@@ -506,7 +508,7 @@ footer a:hover {
 .tag {
   display: inline-block;
   background: var(--charcoal);
-  color: var(--gray-dark);
+  color: var(--gold);
   padding: 0.5rem 1.5rem;
   font-family: var(--font-display);
   font-weight: 800;
@@ -524,6 +526,6 @@ footer a:hover {
 }
 
 .highlight {
-  color: var(--gray-dark);
+  color: var(--gold);
   font-style: italic;
 }
