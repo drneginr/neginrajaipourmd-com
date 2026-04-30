@@ -29,7 +29,7 @@ const constraints = {
     ]
   },
   capacity: {
-    name: "Capacity",
+    name: "Capacity & Operations",
     tagline: "You're maxed out and can't take on more",
     description: "Demand isn't the problem—you have patients who want to see you. The constraint is your time, energy, or physical ability to serve more people without burning out.",
     symptoms: [
@@ -51,7 +51,7 @@ const constraints = {
     ]
   },
   monetization: {
-    name: "Monetization",
+    name: "Monetization & Pricing",
     tagline: "Revenue doesn't match effort or value",
     description: "You're busy, maybe even at capacity, but the numbers don't reflect the value you create or the effort you're putting in. The constraint is how you're packaging and pricing your expertise.",
     symptoms: [
@@ -117,7 +117,7 @@ const constraints = {
     ]
   },
   positioning: {
-    name: "Positioning & Pricing",
+    name: "Positioning & Differentiation",
     tagline: "You're not differentiated in the market",
     description: "You're competent, maybe even excellent, but you sound like everyone else. The constraint isn't your skills—it's how you're positioned in the minds of your ideal patients.",
     symptoms: [
@@ -155,9 +155,9 @@ function generatePDF(firstName, constraintType) {
     // Header
     doc.fontSize(10).fillColor('#C9A35E').text('PRACTICE CONSTRAINT ANALYSIS', { align: 'center' });
     doc.moveDown(0.5);
-    doc.fontSize(24).fillColor('#1A1A1A').text(`${firstName}'s Constraint Analysis`, { align: 'center' });
+    doc.fontSize(24).fillColor('#1A1A1A').text(`Strategic Constraint Analysis prepared for ${firstName}`, { align: 'center' });
     doc.moveDown(0.3);
-    doc.fontSize(12).fillColor('#555').text('Prepared by Dr. Negin Rajaipour, MD', { align: 'center' });
+    doc.fontSize(12).fillColor('#555').text('Negin Rajaipour, MD', { align: 'center' });
     doc.moveDown(2);
 
     // Primary Constraint Badge
@@ -218,11 +218,13 @@ function generatePDF(firstName, constraintType) {
     doc.fontSize(14).fillColor('#C9A35E').text('Ready for a Deeper Conversation?', { align: 'center' });
     doc.moveDown(0.3);
     doc.fontSize(10).fillColor('#1A1A1A').text(
-      `This diagnostic identifies your primary constraint. The next step is understanding the specific context, hidden dependencies, and strategic leverage points unique to your practice.\n\nI work with physician owners and healthcare executives to design growth strategies grounded in operational clarity and sustainable execution.`,
+      `This diagnostic identifies the structural constraint underneath your presenting problem. The next step is a private conversation to address it in the context of your specific practice.`,
       { align: 'center', lineGap: 3 }
     );
-    doc.moveDown(0.4);
-    doc.fontSize(10).fillColor('#C9A35E').text('→ Schedule a conversation: neginrajaipourmd.com/private-inquiry', { align: 'center' });
+    doc.moveDown(0.6);
+    doc.fontSize(10).fillColor('#C9A35E').text('Schedule a private conversation:', { align: 'center' });
+    doc.moveDown(0.2);
+    doc.fontSize(10).fillColor('#1A1A1A').text('neginrajaipourmd.com/private-inquiry', { align: 'center' });
     doc.moveDown(2);
 
     // Horizontal divider above footer
@@ -292,9 +294,9 @@ exports.handler = async (event) => {
               .map(([key, value]) => {
               const patternNames = {
                 demand: 'Demand Generation',
-                capacity: 'Capacity',
-                positioning: 'Positioning & Pricing',
-                monetization: 'Monetization',
+                capacity: 'Capacity & Operations',
+                positioning: 'Positioning & Differentiation',
+                monetization: 'Monetization & Pricing',
                 team: 'Team & Delegation',
                 systems: 'Operational Systems'
               };

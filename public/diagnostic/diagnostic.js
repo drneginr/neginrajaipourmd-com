@@ -123,7 +123,7 @@ const constraints = {
     ]
   },
   capacity: {
-    name: "Capacity",
+    name: "Capacity & Operations",
     tagline: "You're maxed out and can't take on more",
     description: "Demand isn't the problem—you have patients who want to see you. The constraint is your time, energy, or physical ability to serve more people without burning out.",
     symptoms: [
@@ -140,7 +140,7 @@ const constraints = {
     ]
   },
   monetization: {
-    name: "Monetization",
+    name: "Monetization & Pricing",
     tagline: "Revenue doesn't match effort or value",
     description: "You're busy, maybe even at capacity, but the numbers don't reflect the value you create or the effort you're putting in. The constraint is how you're packaging and pricing your expertise.",
     symptoms: [
@@ -191,7 +191,7 @@ const constraints = {
     ]
   },
   positioning: {
-    name: "Positioning & Pricing",
+    name: "Positioning & Differentiation",
     tagline: "You're not differentiated in the market",
     description: "You're competent, maybe even excellent, but you sound like everyone else. The constraint isn't your skills—it's how you're positioned in the minds of your ideal patients.",
     symptoms: [
