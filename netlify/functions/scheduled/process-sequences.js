@@ -1,5 +1,5 @@
-import { getStore } from '@netlify/blobs';
-import { sequences, getBaseTemplate } from '../email-data.js';
+const { getStore } = require('@netlify/blobs');
+const { sequences, getBaseTemplate } = require('../email-data.js');
 
 // Render email with base template
 async function renderEmail(bodyContent, subject, unsubscribeToken) {
@@ -13,7 +13,7 @@ async function renderEmail(bodyContent, subject, unsubscribeToken) {
   return template;
 }
 
-export default async () => {
+exports.handler = async () => {
   console.log('Processing email sequences...');
 
   try {
@@ -95,6 +95,10 @@ export default async () => {
 
   } catch (error) {
     console.error('Sequence processing error:', error);
+    console.error('Sequence error details:', {
+      message: error.message,
+      stack: error.stack
+    });
     return {
       statusCode: 500,
       body: JSON.stringify({
@@ -105,6 +109,6 @@ export default async () => {
   }
 };
 
-export const config = {
+exports.config = {
   schedule: '@daily'
 };

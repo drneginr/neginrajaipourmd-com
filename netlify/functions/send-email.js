@@ -1,9 +1,9 @@
-import { Resend } from 'resend';
-import { getStore } from '@netlify/blobs';
+const { Resend } = require('resend');
+const { getStore } = require('@netlify/blobs');
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-export default async (req, context) => {
+exports.handler = async (req, context) => {
   if (req.method !== 'POST') {
     return new Response('Method not allowed', { status: 405 });
   }
@@ -41,6 +41,11 @@ export default async (req, context) => {
 
   } catch (error) {
     console.error('Email send error:', error);
+    console.error('Send email error details:', {
+      message: error.message,
+      statusCode: error.statusCode,
+      stack: error.stack
+    });
     return new Response(JSON.stringify({
       success: false,
       error: error.message
@@ -49,8 +54,4 @@ export default async (req, context) => {
       headers: { 'Content-Type': 'application/json' }
     });
   }
-};
-
-export const config = {
-  path: '/api/send-email'
 };

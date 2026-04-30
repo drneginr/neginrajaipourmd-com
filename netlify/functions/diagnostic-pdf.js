@@ -7,7 +7,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 // Constraint definitions (matching frontend)
 const constraints = {
   demand: {
-    name: "Demand Constraint",
+    name: "Demand Generation",
     tagline: "You need more of the right patients/clients",
     description: "Your practice has capacity, your team (if you have one) is ready, but your pipeline is inconsistent. The constraint isn't your ability to deliver—it's attracting enough of the right people.",
     symptoms: [
@@ -29,7 +29,7 @@ const constraints = {
     ]
   },
   capacity: {
-    name: "Capacity Constraint",
+    name: "Capacity",
     tagline: "You're maxed out and can't take on more",
     description: "Demand isn't the problem—you have patients who want to see you. The constraint is your time, energy, or physical ability to serve more people without burning out.",
     symptoms: [
@@ -51,7 +51,7 @@ const constraints = {
     ]
   },
   monetization: {
-    name: "Monetization Constraint",
+    name: "Monetization",
     tagline: "Revenue doesn't match effort or value",
     description: "You're busy, maybe even at capacity, but the numbers don't reflect the value you create or the effort you're putting in. The constraint is how you're packaging and pricing your expertise.",
     symptoms: [
@@ -73,7 +73,7 @@ const constraints = {
     ]
   },
   team: {
-    name: "Team Constraint",
+    name: "Team & Delegation",
     tagline: "You can't scale because you can't delegate",
     description: "You have demand, and you want to grow capacity, but your team isn't ready, reliable, or capable of executing without you. The constraint is human capital.",
     symptoms: [
@@ -95,7 +95,7 @@ const constraints = {
     ]
   },
   systems: {
-    name: "Systems Constraint",
+    name: "Operational Systems",
     tagline: "Everything breaks when you're not looking",
     description: "You have patients, maybe even a team, but operations are chaotic. Nothing is documented, processes are inconsistent, and you're constantly firefighting. The constraint is operational infrastructure.",
     symptoms: [
@@ -117,7 +117,7 @@ const constraints = {
     ]
   },
   positioning: {
-    name: "Positioning Constraint",
+    name: "Positioning & Pricing",
     tagline: "You're not differentiated in the market",
     description: "You're competent, maybe even excellent, but you sound like everyone else. The constraint isn't your skills—it's how you're positioned in the minds of your ideal patients.",
     symptoms: [
@@ -153,7 +153,7 @@ function generatePDF(firstName, constraintType) {
 
     // PAGE 1: Results & Analysis
     // Header
-    doc.fontSize(10).fillColor('#C9A35E').text('PRACTICE DIAGNOSTIC RESULTS', { align: 'center' });
+    doc.fontSize(10).fillColor('#C9A35E').text('PRACTICE CONSTRAINT ANALYSIS', { align: 'center' });
     doc.moveDown(0.5);
     doc.fontSize(24).fillColor('#1A1A1A').text(`${firstName}'s Constraint Analysis`, { align: 'center' });
     doc.moveDown(0.3);
@@ -218,12 +218,16 @@ function generatePDF(firstName, constraintType) {
     doc.fontSize(14).fillColor('#C9A35E').text('Ready for a Deeper Conversation?', { align: 'center' });
     doc.moveDown(0.3);
     doc.fontSize(10).fillColor('#1A1A1A').text(
-      `This diagnostic identifies your primary constraint. The next step is understanding the specific context, hidden dependencies, and strategic leverage points unique to your practice.\n\nI work with physician leaders and healthcare entrepreneurs to design growth strategies that align with nervous system capacity—not against it.`,
+      `This diagnostic identifies your primary constraint. The next step is understanding the specific context, hidden dependencies, and strategic leverage points unique to your practice.\n\nI work with physician owners and healthcare executives to design growth strategies grounded in operational clarity and sustainable execution.`,
       { align: 'center', lineGap: 3 }
     );
     doc.moveDown(0.4);
     doc.fontSize(10).fillColor('#C9A35E').text('→ Schedule a conversation: neginrajaipourmd.com/private-inquiry', { align: 'center' });
     doc.moveDown(2);
+
+    // Horizontal divider above footer
+    doc.moveTo(150, doc.y).lineTo(462, doc.y).stroke('#E5E5E5');
+    doc.moveDown(0.8);
 
     // Footer at end of page 2 content
     doc.fontSize(8).fillColor('#888').text(

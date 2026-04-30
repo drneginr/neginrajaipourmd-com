@@ -106,7 +106,7 @@ const questions = [
 // Constraint pattern definitions
 const constraints = {
   demand: {
-    name: "Demand Constraint",
+    name: "Demand Generation",
     tagline: "You need more of the right patients/clients",
     description: "Your practice has capacity, your team (if you have one) is ready, but your pipeline is inconsistent. The constraint isn't your ability to deliver—it's attracting enough of the right people.",
     symptoms: [
@@ -123,7 +123,7 @@ const constraints = {
     ]
   },
   capacity: {
-    name: "Capacity Constraint",
+    name: "Capacity",
     tagline: "You're maxed out and can't take on more",
     description: "Demand isn't the problem—you have patients who want to see you. The constraint is your time, energy, or physical ability to serve more people without burning out.",
     symptoms: [
@@ -140,7 +140,7 @@ const constraints = {
     ]
   },
   monetization: {
-    name: "Monetization Constraint",
+    name: "Monetization",
     tagline: "Revenue doesn't match effort or value",
     description: "You're busy, maybe even at capacity, but the numbers don't reflect the value you create or the effort you're putting in. The constraint is how you're packaging and pricing your expertise.",
     symptoms: [
@@ -157,7 +157,7 @@ const constraints = {
     ]
   },
   team: {
-    name: "Team Constraint",
+    name: "Team & Delegation",
     tagline: "You can't scale because you can't delegate",
     description: "You have demand, and you want to grow capacity, but your team isn't ready, reliable, or capable of executing without you. The constraint is human capital.",
     symptoms: [
@@ -174,7 +174,7 @@ const constraints = {
     ]
   },
   systems: {
-    name: "Systems Constraint",
+    name: "Operational Systems",
     tagline: "Everything breaks when you're not looking",
     description: "You have patients, maybe even a team, but operations are chaotic. Nothing is documented, process are inconsistent, and you're constantly firefighting. The constraint is operational infrastructure.",
     symptoms: [
@@ -191,7 +191,7 @@ const constraints = {
     ]
   },
   positioning: {
-    name: "Positioning Constraint",
+    name: "Positioning & Pricing",
     tagline: "You're not differentiated in the market",
     description: "You're competent, maybe even excellent, but you sound like everyone else. The constraint isn't your skills—it's how you're positioned in the minds of your ideal patients.",
     symptoms: [

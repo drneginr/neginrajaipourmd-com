@@ -1,28 +1,24 @@
-import { readFileSync } from 'fs';
-import { join, dirname } from 'path';
-import { fileURLToPath } from 'url';
-
-const functionDir = (() => {
-  try {
-    return eval('__dirname');
-  } catch {
-    return dirname(fileURLToPath(import.meta.url));
-  }
-})();
+const { readFileSync } = require('fs');
+const { join } = require('path');
 
 // Load email sequences at build time
 const advisorySequence = JSON.parse(
-  readFileSync(join(functionDir, 'email-templates/sequences/advisory.json'), 'utf-8')
+  readFileSync(join(__dirname, 'email-templates/sequences/advisory.json'), 'utf-8')
 );
 
 const baseTemplate = readFileSync(
-  join(functionDir, 'email-templates/base.html'), 'utf-8'
+  join(__dirname, 'email-templates/base.html'), 'utf-8'
 );
 
-export const sequences = {
+const sequences = {
   'advisory': advisorySequence
 };
 
-export function getBaseTemplate() {
+function getBaseTemplate() {
   return baseTemplate;
 }
+
+module.exports = {
+  sequences,
+  getBaseTemplate
+};

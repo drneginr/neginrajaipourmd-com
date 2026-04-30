@@ -1,9 +1,9 @@
-import { Resend } from 'resend';
-import { getStore } from '@netlify/blobs';
+const { Resend } = require('resend');
+const { getStore } = require('@netlify/blobs');
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-export default async (event) => {
+exports.handler = async (event) => {
   // CORS headers
   const headers = {
     'Access-Control-Allow-Origin': '*',
@@ -71,6 +71,11 @@ export default async (event) => {
       console.log('Inquiry admin notification sent successfully');
     } catch (adminError) {
       console.error('Failed to send inquiry admin notification:', adminError);
+      console.error('Admin email error details:', {
+        message: adminError.message,
+        statusCode: adminError.statusCode,
+        name: adminError.name
+      });
       // Don't fail the whole function if admin notification fails
     }
 
@@ -103,6 +108,11 @@ export default async (event) => {
       console.log('Inquiry user confirmation sent successfully');
     } catch (userError) {
       console.error('Failed to send inquiry user confirmation:', userError);
+      console.error('User email error details:', {
+        message: userError.message,
+        statusCode: userError.statusCode,
+        name: userError.name
+      });
       // Don't fail if user confirmation fails - admin notification is more critical
     }
 
@@ -135,6 +145,10 @@ export default async (event) => {
       console.log('Contact enrolled in advisory sequence successfully');
     } catch (enrollError) {
       console.error('Failed to enroll in sequence:', enrollError);
+      console.error('Enrollment error details:', {
+        message: enrollError.message,
+        name: enrollError.name
+      });
       // Don't fail the whole function if enrollment fails
     }
 
@@ -146,18 +160,20 @@ export default async (event) => {
 
   } catch (error) {
     console.error('Error processing inquiry:', error);
+    console.error('Error details:', {
+      message: error.message,
+      stack: error.stack,
+      name: error.name,
+      statusCode: error.statusCode,
+      response: error.response
+    });
     return {
       statusCode: 500,
       headers,
       body: JSON.stringify({
         error: 'Failed to process inquiry',
-        details: error.message,
-        hint: 'Please ensure Resend API key is configured in Netlify environment variables'
+        details: error.message
       }),
     };
   }
-};
-
-export const config = {
-  path: '/api/private-inquiry'
 };

@@ -1,6 +1,6 @@
-import { getStore } from '@netlify/blobs';
+const { getStore } = require('@netlify/blobs');
 
-export default async (req) => {
+exports.handler = async (req) => {
   const url = new URL(req.url);
   const token = url.searchParams.get('token');
 
@@ -58,10 +58,10 @@ export default async (req) => {
 
   } catch (error) {
     console.error('Unsubscribe error:', error);
+    console.error('Unsubscribe error details:', {
+      message: error.message,
+      stack: error.stack
+    });
     return new Response('Error processing unsubscribe', { status: 500 });
   }
-};
-
-export const config = {
-  path: '/unsubscribe'
 };
