@@ -192,44 +192,43 @@ function generatePDF(firstName, constraintType) {
     doc.addPage();
 
     doc.fontSize(18).fillColor('#C9A35E').text('Your Action Plan', { align: 'center' });
-    doc.moveDown(1.5);
+    doc.moveDown(1.2);
 
     // Next Steps
     doc.fontSize(14).fillColor('#C9A35E').text('Immediate Next Steps');
-    doc.moveDown(0.5);
+    doc.moveDown(0.4);
     doc.fontSize(11).fillColor('#1A1A1A');
     constraint.nextSteps.forEach((step, index) => {
-      doc.text(`${index + 1}. ${step}`, { indent: 10, lineGap: 6 });
+      doc.text(`${index + 1}. ${step}`, { indent: 10, lineGap: 5 });
     });
-    doc.moveDown(1.5);
+    doc.moveDown(1.2);
 
     // Strategic Questions
     doc.fontSize(14).fillColor('#C9A35E').text('Strategic Questions to Consider');
-    doc.moveDown(0.5);
+    doc.moveDown(0.4);
     doc.fontSize(11).fillColor('#1A1A1A');
     constraint.strategicQuestions.forEach(question => {
-      doc.text(`• ${question}`, { indent: 10, lineGap: 6 });
+      doc.text(`• ${question}`, { indent: 10, lineGap: 5 });
     });
-    doc.moveDown(2);
+    doc.moveDown(1.5);
 
     // Next Steps Box
-    doc.roundedRect(50, doc.y, 512, 120, 5).stroke('#C9A35E');
-    doc.moveDown(0.5);
+    doc.roundedRect(50, doc.y, 512, 110, 5).stroke('#C9A35E');
+    doc.moveDown(0.4);
     doc.fontSize(14).fillColor('#C9A35E').text('Ready for a Deeper Conversation?', { align: 'center' });
     doc.moveDown(0.3);
     doc.fontSize(10).fillColor('#1A1A1A').text(
       `This diagnostic identifies your primary constraint. The next step is understanding the specific context, hidden dependencies, and strategic leverage points unique to your practice.\n\nI work with physician leaders and healthcare entrepreneurs to design growth strategies that align with nervous system capacity—not against it.`,
-      { align: 'center', lineGap: 4 }
+      { align: 'center', lineGap: 3 }
     );
-    doc.moveDown(0.5);
+    doc.moveDown(0.4);
     doc.fontSize(10).fillColor('#C9A35E').text('→ Schedule a conversation: neginrajaipourmd.com/private-inquiry', { align: 'center' });
+    doc.moveDown(2);
 
-    // Footer
+    // Footer at end of page 2 content
     doc.fontSize(8).fillColor('#888').text(
-      '© 2026 VitaRegen Medical™  |  Dr. Negin Rajaipour, MD',
-      50,
-      doc.page.height - 50,
-      { align: 'center', width: 512 }
+      '© 2026 Negin Rajaipour, MD',
+      { align: 'center' }
     );
 
     doc.end();
