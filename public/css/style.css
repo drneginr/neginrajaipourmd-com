@@ -668,6 +668,45 @@ footer .copyright {
   color: var(--brass);
 }
 
+/* ═══ PRIVATE INQUIRY PAGE HEADER ═══ */
+.inquiry-page-header {
+  padding: 8rem 2rem 5rem;
+  background-color: var(--off-white);
+  text-align: center;
+}
+
+.inquiry-header-content {
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.inquiry-eyebrow {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--brass);
+  margin-bottom: 1.5rem;
+}
+
+.inquiry-h1 {
+  font-family: var(--font-heading);
+  font-size: 40px;
+  font-weight: 500;
+  line-height: 1.15;
+  color: var(--charcoal);
+  margin-bottom: 1.5rem;
+}
+
+.inquiry-lead {
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--charcoal);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
 /* ═══ FORMS ═══ */
 form {
   max-width: 600px;
@@ -845,6 +884,18 @@ select {
 
   .engagements-refined {
     padding: 3rem 1.5rem var(--section-padding-mobile);
+  }
+
+  .inquiry-page-header {
+    padding: 5rem 1.5rem 3rem;
+  }
+
+  .inquiry-h1 {
+    font-size: 28px;
+  }
+
+  .inquiry-lead {
+    font-size: 16px;
   }
 }
 
