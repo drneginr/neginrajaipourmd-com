@@ -267,27 +267,47 @@ exports.handler = async (event) => {
         html: `
           <h2 style="color: #1A1A1A; margin-bottom: 1.5rem;">New Practice Diagnostic Submission</h2>
 
-          <p><strong>Submitter:</strong> ${firstName}</p>
-          <p><strong>Email:</strong> ${email}</p>
-          <p><strong>Primary Constraint:</strong> ${constraints[result.constraint].name}</p>
+          <p style="margin: 0.5rem 0;"><strong>Submitter:</strong> ${firstName}</p>
+          <p style="margin: 0.5rem 0;"><strong>Email:</strong> ${email}</p>
+          <p style="margin: 0.5rem 0;"><strong>Submitted:</strong> ${new Date().toLocaleString('en-US', {
+            timeZone: 'America/Los_Angeles',
+            month: 'numeric',
+            day: 'numeric',
+            year: 'numeric',
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: true
+          })} PT</p>
+
+          <p style="margin: 1.5rem 0 0.5rem 0;"><strong>Primary Constraint:</strong> ${constraints[result.constraint].name}</p>
 
           <h3 style="margin-top: 2rem; color: #1A1A1A;">Pattern Distribution</h3>
           <ul style="line-height: 1.8;">
-            ${Object.entries(result.patternCounts || {}).map(([key, value]) => {
+            ${Object.entries(result.patternCounts || {})
+              .sort((a, b) => b[1] - a[1]) // Sort by score descending
+              .map(([key, value]) => {
               const patternNames = {
                 demand: 'Demand Generation',
                 capacity: 'Capacity',
                 positioning: 'Positioning & Pricing',
                 monetization: 'Monetization',
-                team: 'Team & Delegation'
+                team: 'Team & Delegation',
+                systems: 'Operational Systems'
               };
-              return `<li><strong>${patternNames[key] || key}:</strong> ${value}/4</li>`;
+              const maxScores = {
+                demand: 9,
+                capacity: 9,
+                monetization: 7,
+                team: 6,
+                systems: 4,
+                positioning: 4
+              };
+              const isPrimary = key === result.constraint;
+              const label = patternNames[key] || key;
+              const marker = isPrimary ? ' ← <strong style="color: #A8854B;">PRIMARY</strong>' : '';
+              return `<li><strong>${label}:</strong> ${value}/${maxScores[key] || 10}${marker}</li>`;
             }).join('')}
           </ul>
-
-          <p style="margin-top: 2rem; color: #666; font-size: 0.9rem;">
-            Submitted: ${new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angeles' })} PT
-          </p>
         `,
       });
       console.log('Admin notification sent successfully');
