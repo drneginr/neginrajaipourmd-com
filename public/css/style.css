@@ -15,8 +15,8 @@
   --brass: #A8854B;
   --warm-tint: #F5F1E8;
 
-  /* Typography - Fraunces (serif) + Inter (sans) */
-  --font-display: 'Fraunces', Georgia, serif;
+  /* Typography - Playfair Display (serif) + Inter (sans) */
+  --font-display: 'Playfair Display', Georgia, serif;
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
 
   /* Spacing */
@@ -234,14 +234,12 @@ header .nav-links a::after {
   height: 100%;
   display: flex;
   align-items: center;
-  padding: 2rem;
+  padding: 2rem 2rem 2rem 80px;
 }
 
 .hero-text-container {
-  max-width: var(--max-width);
-  margin: 0 auto;
   width: 100%;
-  max-width: 680px;
+  max-width: 720px;
 }
 
 .hero-text-container h1 {
@@ -812,7 +810,7 @@ select {
 
   .hero-content-overlay {
     align-items: flex-end;
-    padding: 2rem 1.5rem;
+    padding: 2rem 1.5rem 2rem 24px;
   }
 
   .hero-text-container {
