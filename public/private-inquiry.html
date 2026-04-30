@@ -21,24 +21,24 @@
       <ul class="nav-links">
         <li><a href="/">Home</a></li>
         <li><a href="/#about">About</a></li>
-        <li><a href="/#advisory">Advisory</a></li>
+        <li><a href="/#engagements">Engagements</a></li>
         <li><a href="/diagnostic/">Diagnostic</a></li>
-        <li><a href="/private-inquiry.html">Private Inquiry</a></li>
+        <li><a href="/private-inquiry.html">Inquiry</a></li>
       </ul>
     </nav>
   </header>
 
   <!-- ═══ PAGE HEADER ═══ -->
-  <section class="hero" style="padding: 5rem 2rem;">
+  <section class="hero" style="min-height: 60vh; padding: 6rem 2rem;">
     <div class="hero-content">
       <span class="tag">Private Inquiry</span>
       <h1 style="margin-top: 1.5rem;">Let's Discuss Your Needs</h1>
-      <p class="lead" style="margin: 1.5rem auto; max-width: 600px;">For retainer engagements, practice development, speaking, media, and custom scope. Session-based advisory can be booked directly via the calendar link.</p>
+      <p class="lead" style="margin: 2rem 0; max-width: 680px;">For retainer engagements, practice development, speaking, media, and custom scope. Strategic sessions can be scheduled directly via calendar.</p>
     </div>
   </section>
 
   <!-- ═══ INQUIRY FORM ═══ -->
-  <section class="container-narrow" style="padding: 3rem 2rem 5rem;">
+  <section class="container-narrow" style="padding: 4rem 2rem 8rem;">
     <form id="inquiry-form" action="/api/private-inquiry" method="POST">
       <div class="form-group">
         <label for="firstName">First Name *</label>
@@ -96,15 +96,15 @@
         <textarea id="message" name="message" rows="5"></textarea>
       </div>
 
-      <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Submit Inquiry</button>
+      <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1.5rem;">Submit Inquiry</button>
 
       <p class="form-disclaimer">
         The services offered through this website are advisory and informational conversations only. These are not medical visits, do not establish a physician-patient relationship, and do not include diagnosis or treatment. Your information is kept confidential and will never be shared.
       </p>
     </form>
 
-    <div id="form-success" style="display: none; text-align: center; padding: 3rem 2rem; background: var(--cream); border-radius: 8px; margin-top: 2rem;">
-      <h2 style="color: var(--gold); margin-bottom: 1rem;">Thank You!</h2>
+    <div id="form-success" style="display: none; text-align: center; padding: 4rem 3rem; background: var(--off-white); border: 1px solid var(--border); border-radius: 4px; margin-top: 3rem;">
+      <h2 style="color: var(--brass); margin-bottom: 1.5rem;">Thank You</h2>
       <p class="lead">Your inquiry has been received. Dr. Rajaipour will review your message and respond within 48 hours.</p>
       <p style="margin-top: 2rem;"><a href="/" class="btn btn-secondary">Return to Homepage</a></p>
     </div>
@@ -112,14 +112,34 @@
 
   <!-- ═══ FOOTER ═══ -->
   <footer>
-    <div class="container">
-      <ul class="social-links">
-        <li><a href="https://linkedin.com" target="_blank" aria-label="LinkedIn">LinkedIn</a></li>
-        <li><a href="https://instagram.com" target="_blank" aria-label="Instagram">Instagram</a></li>
-      </ul>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>Dr. Negin Rajaipour, MD</h4>
+        <p style="color: #B8B8B8; font-size: 0.9rem; line-height: 1.6; max-width: 300px;">Strategic clarity for those who lead at the edge.</p>
+      </div>
 
-      <p>&copy; 2026 VitaRegen Medical™. All Rights Reserved.</p>
-      <p style="font-size: 0.8rem; margin-top: 1rem;">The services offered through this website are advisory and informational conversations only.</p>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <ul>
+          <li><a href="/#about">About</a></li>
+          <li><a href="/#engagements">Engagements</a></li>
+          <li><a href="/private-inquiry.html">Private Inquiry</a></li>
+          <li><a href="/diagnostic/">Diagnostic</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul class="social-links" style="flex-direction: column; gap: 0.75rem;">
+          <li><a href="https://www.linkedin.com/in/dr-negin-rajaipour-md-52b486166" target="_blank">LinkedIn</a></li>
+          <li><a href="https://instagram.com/drneginr" target="_blank">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p style="font-size: 0.8rem; max-width: 700px; margin: 0 auto 1.5rem;">The services offered through this website are advisory and informational conversations only. These are not medical visits, do not establish a physician-patient relationship, and do not include diagnosis or treatment.</p>
+      <p class="copyright">© 2026 Negin Rajaipour, MD</p>
     </div>
   </footer>
 
