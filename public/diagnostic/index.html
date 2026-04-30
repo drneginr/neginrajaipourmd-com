@@ -8,9 +8,13 @@
   <link rel="stylesheet" href="/css/style.css">
   <style>
     .diagnostic-container {
-      max-width: 800px;
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 3rem 2rem;
+      padding: 0 2rem 4rem 2rem;
+    }
+
+    .diagnostic-inner {
+      max-width: 800px;
     }
 
     .question-card {
@@ -101,46 +105,76 @@
 
     .result-container {
       display: none;
-      text-align: center;
+      text-align: left;
+      max-width: 800px;
+      padding-top: 1.5rem;
     }
 
     .result-container.active {
       display: block;
     }
 
+    .result-container h2 {
+      margin: 0 0 1.5rem 0;
+      font-size: 1.125rem;
+      color: var(--charcoal);
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
     .constraint-badge {
       display: inline-block;
       background: var(--gold);
       color: var(--charcoal);
-      padding: 1rem 2rem;
+      padding: 0.75rem 1.5rem;
       font-family: var(--font-display);
       font-weight: 700;
-      font-size: 1.25rem;
+      font-size: 1.125rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       border-radius: 4px;
-      margin: 2rem 0;
+      margin: 0 0 2rem 0;
     }
 
     .result-description {
       background: var(--cream);
       padding: 2.5rem;
       border-radius: 8px;
-      margin: 2rem 0;
+      margin: 0 0 6rem 0;
       text-align: left;
     }
 
     .result-description h3 {
       color: var(--gold);
-      margin-bottom: 1rem;
+      margin: 0 0 1.5rem 0;
+      font-size: 1.5rem;
+      line-height: 1.4;
+    }
+
+    .result-description > p {
+      margin: 0 0 1.5rem 0;
+      line-height: 1.7;
+    }
+
+    .result-description ul {
+      margin: 1rem 0 1.5rem 0;
     }
 
     .email-form {
-      margin-top: 3rem;
-      padding: 2rem;
+      margin-top: 0;
+      padding: 2.5rem;
       background: var(--white);
       border: 2px solid var(--gold);
       border-radius: 8px;
+      text-align: left;
+    }
+
+    .email-form h3 {
+      margin: 0 0 0.75rem 0;
+    }
+
+    .email-form p {
+      margin: 0 0 1.5rem 0;
     }
   </style>
 </head>
@@ -162,63 +196,73 @@
     </nav>
   </header>
 
-  <section class="hero" style="padding: 5rem 2rem 3rem;">
-    <div class="hero-content">
-      <span class="tag">Practice Diagnostic</span>
-      <h1 style="margin-top: 1.5rem;">What's Constraining Your Practice Growth?</h1>
-      <p class="lead" style="margin: 1.5rem auto; max-width: 650px;">
+  <!-- Intake Hero (shown during questions) -->
+  <section class="hero" id="intakeHero" style="padding: 4rem 2rem 2rem; max-width: 1200px; margin: 0 auto;">
+    <div style="max-width: 800px;">
+      <span class="tag" style="display: inline-block; margin-bottom: 1rem;">Practice Diagnostic</span>
+      <h1 style="margin: 0 0 1.5rem 0; text-align: left;">What's Constraining Your Practice Growth?</h1>
+      <p class="lead" style="margin: 0; text-align: left; max-width: 650px;">
         10 questions to identify your primary constraint pattern and receive a personalized 2-page diagnostic brief.
       </p>
     </div>
   </section>
 
+  <!-- Results Hero (shown after completion) -->
+  <section class="hero" id="resultsHero" style="display: none; padding: 4rem 2rem 2rem; max-width: 1200px; margin: 0 auto;">
+    <div style="max-width: 800px;">
+      <span class="tag" style="display: inline-block; margin-bottom: 1rem;">Practice Diagnostic</span>
+      <h1 style="margin: 0; text-align: left;">Your Primary Constraint</h1>
+    </div>
+  </section>
+
   <div class="diagnostic-container">
-    <!-- Progress Bar -->
-    <div class="progress-bar">
-      <div class="progress-fill" id="progressFill"></div>
-    </div>
-
-    <!-- Question Cards -->
-    <div id="questionContainer">
-      <!-- Questions will be injected by JavaScript -->
-    </div>
-
-    <!-- Result View -->
-    <div class="result-container" id="resultContainer">
-      <h2>Your Primary Constraint:</h2>
-      <div class="constraint-badge" id="constraintName"></div>
-
-      <div class="result-description" id="resultDescription">
-        <!-- Result details will be injected here -->
+    <div class="diagnostic-inner">
+      <!-- Progress Bar -->
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
       </div>
 
-      <div class="email-form">
-        <h3 style="margin-bottom: 1rem;">Get Your Personalized 2-Page Diagnostic Brief</h3>
-        <p style="color: var(--slate); margin-bottom: 1.5rem;">
-          Enter your email to receive a detailed PDF analysis of your constraint pattern, including specific strategies and next steps.
-        </p>
+      <!-- Question Cards -->
+      <div id="questionContainer">
+        <!-- Questions will be injected by JavaScript -->
+      </div>
 
-        <form id="pdfRequestForm">
-          <div id="emailError" style="display: none; padding: 1.5rem; background: #FEF2F2; border: 1px solid #FCA5A5; border-radius: 4px; margin-bottom: 1.5rem;">
-            <p style="color: #991B1B; font-weight: 500; margin-bottom: 0.5rem;">There was an error sending your diagnostic brief.</p>
-            <p style="color: #7F1D1D; font-size: 0.9rem; margin: 0;">If this persists, please email <a href="mailto:office@neginrajaipourmd.com" style="color: #991B1B; text-decoration: underline;">office@neginrajaipourmd.com</a> directly.</p>
-          </div>
+      <!-- Result View -->
+      <div class="result-container" id="resultContainer">
+        <div class="constraint-badge" id="constraintName"></div>
 
-          <div class="form-group">
-            <input type="text" id="firstName" name="firstName" placeholder="First Name" required style="margin-bottom: 1rem;">
-          </div>
-          <div class="form-group">
-            <input type="email" id="email" name="email" placeholder="Email Address" required style="margin-bottom: 1.5rem;">
-          </div>
-          <button type="submit" class="btn btn-primary" id="diagnosticSubmitBtn" style="width: 100%;">
-            Send My Diagnostic Brief
-          </button>
-        </form>
+        <div class="result-description" id="resultDescription">
+          <!-- Result details will be injected here -->
+        </div>
 
-        <div id="emailSuccess" style="display: none; margin-top: 1.5rem; padding: 1.5rem; background: var(--cream); border-radius: 4px;">
-          <p style="color: var(--gold); font-weight: 600; margin: 0;">
-            ✓ Check your inbox! Your personalized diagnostic brief is on its way.
+        <div class="email-form">
+          <h3>Get Your Personalized 2-Page Diagnostic Brief</h3>
+          <p style="color: var(--slate);">
+            Enter your email to receive a detailed PDF analysis of your constraint pattern, including specific strategies and next steps.
           </p>
+
+          <form id="pdfRequestForm">
+            <div id="emailError" style="display: none; padding: 1.5rem; background: #FEF2F2; border: 1px solid #FCA5A5; border-radius: 4px; margin-bottom: 1.5rem;">
+              <p style="color: #991B1B; font-weight: 500; margin-bottom: 0.5rem;">There was an error sending your diagnostic brief.</p>
+              <p style="color: #7F1D1D; font-size: 0.9rem; margin: 0;">If this persists, please email <a href="mailto:office@neginrajaipourmd.com" style="color: #991B1B; text-decoration: underline;">office@neginrajaipourmd.com</a> directly.</p>
+            </div>
+
+            <div class="form-group">
+              <input type="text" id="firstName" name="firstName" placeholder="First Name" required style="margin-bottom: 1rem;">
+            </div>
+            <div class="form-group">
+              <input type="email" id="email" name="email" placeholder="Email Address" required style="margin-bottom: 1.5rem;">
+            </div>
+            <button type="submit" class="btn btn-primary" id="diagnosticSubmitBtn" style="width: 100%;">
+              Send My Diagnostic Brief
+            </button>
+          </form>
+
+          <div id="emailSuccess" style="display: none; margin-top: 1.5rem; padding: 1.5rem; background: var(--cream); border-radius: 4px;">
+            <p style="color: var(--gold); font-weight: 600; margin: 0;">
+              ✓ Check your inbox! Your personalized diagnostic brief is on its way.
+            </p>
+          </div>
         </div>
       </div>
     </div>

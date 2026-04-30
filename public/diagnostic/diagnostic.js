@@ -308,6 +308,10 @@ function showResults() {
   document.getElementById('questionContainer').style.display = 'none';
   document.querySelector('.progress-bar').style.display = 'none';
 
+  // Switch from intake hero to results hero
+  document.getElementById('intakeHero').style.display = 'none';
+  document.getElementById('resultsHero').style.display = 'block';
+
   // Show results
   document.getElementById('constraintName').textContent = constraint.name;
 
