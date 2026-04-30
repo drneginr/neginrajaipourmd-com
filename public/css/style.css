@@ -360,7 +360,7 @@ section {
   border: 1px solid var(--border);
   border-radius: 4px;
   font-size: 1rem;
-  color: var(--cream);
+  color: var(--navy);
   transition: all 0.3s ease;
 }
 
