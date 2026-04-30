@@ -669,24 +669,25 @@ footer .copyright {
 
 /* ═══ PRIVATE INQUIRY PAGE HEADER ═══ */
 .inquiry-page-header {
-  padding: 8rem 2rem 5rem;
+  padding: 4rem 2rem 2rem;
   background-color: var(--off-white);
-  text-align: center;
-}
-
-.inquiry-header-content {
-  max-width: 680px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
+.inquiry-header-content {
+  max-width: 800px;
+  text-align: left;
+}
+
 .inquiry-eyebrow {
-  display: block;
+  display: inline-block;
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--brass);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .inquiry-h1 {
@@ -695,15 +696,17 @@ footer .copyright {
   font-weight: 500;
   line-height: 1.15;
   color: var(--charcoal);
-  margin-bottom: 1.5rem;
+  margin: 0 0 1.5rem 0;
+  text-align: left;
 }
 
 .inquiry-lead {
   font-size: 17px;
   line-height: 1.65;
   color: var(--charcoal);
-  max-width: 600px;
-  margin: 0 auto;
+  max-width: 650px;
+  margin: 0;
+  text-align: left;
 }
 
 /* ═══ FORMS ═══ */
@@ -886,7 +889,7 @@ select {
   }
 
   .inquiry-page-header {
-    padding: 5rem 1.5rem 3rem;
+    padding: 3rem 1.5rem 1.5rem;
   }
 
   .inquiry-h1 {
