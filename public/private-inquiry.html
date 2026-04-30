@@ -38,7 +38,7 @@
   </section>
 
   <!-- ═══ INQUIRY FORM ═══ -->
-  <section class="container-narrow" style="padding: 4rem 2rem 8rem;">
+  <section class="container-narrow" id="inquiry-section" style="padding: 4rem 2rem 8rem;">
     <form id="inquiry-form" action="/api/private-inquiry" method="POST">
       <div class="form-group">
         <label for="firstName">First Name *</label>
@@ -108,7 +108,7 @@
       </p>
     </form>
 
-    <div id="form-success" style="display: none; text-align: center; padding: 4rem 3rem; background: var(--off-white); border: 1px solid var(--border); border-radius: 4px; margin-top: 3rem;">
+    <div id="form-success" style="display: none; text-align: center; padding: 4rem 3rem; background: var(--off-white); border: 1px solid var(--border); border-radius: 4px; margin-top: 0;">
       <h2 style="color: var(--brass); margin-bottom: 1.5rem;">Thank You</h2>
       <p class="lead">Your inquiry has been received. Dr. Rajaipour will review your message and respond within 48 hours.</p>
       <p style="margin-top: 2rem;"><a href="/" class="btn btn-secondary">Return to Homepage</a></p>
@@ -188,6 +188,8 @@
         if (response.ok) {
           form.style.display = 'none';
           successMessage.style.display = 'block';
+          // Reduce section padding to eliminate large gap
+          document.getElementById('inquiry-section').style.padding = '4rem 2rem 6rem';
           window.scrollTo({ top: 0, behavior: 'smooth' });
         } else {
           // Show inline error message
