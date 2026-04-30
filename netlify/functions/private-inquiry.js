@@ -1,4 +1,5 @@
 import { Resend } from 'resend';
+import { getStore } from '@netlify/blobs';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -103,6 +104,38 @@ export default async (event) => {
     } catch (userError) {
       console.error('Failed to send inquiry user confirmation:', userError);
       // Don't fail if user confirmation fails - admin notification is more critical
+    }
+
+    // Enroll in advisory email sequence
+    console.log(`Enrolling ${email} in advisory sequence`);
+    try {
+      const contactsStore = getStore('contacts');
+      const timestamp = new Date().toISOString();
+      const unsubscribeToken = Buffer.from(email).toString('base64');
+
+      const contactData = {
+        email,
+        name: firstName,
+        phone,
+        organization,
+        role,
+        inquiryType,
+        timeline,
+        message: message || '',
+        source: 'private-inquiry',
+        sequenceType: 'advisory',
+        enrolledAt: timestamp,
+        currentEmailIndex: 1, // Start at index 1 since we already sent confirmation (index 0)
+        subscribed: true,
+        unsubscribeToken,
+        lastEmailSent: timestamp
+      };
+
+      await contactsStore.set(email, JSON.stringify(contactData));
+      console.log('Contact enrolled in advisory sequence successfully');
+    } catch (enrollError) {
+      console.error('Failed to enroll in sequence:', enrollError);
+      // Don't fail the whole function if enrollment fails
     }
 
     return {
