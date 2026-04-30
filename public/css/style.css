@@ -187,10 +187,12 @@ header .nav-links a:hover::after {
 
 /* ═══ HERO SECTION ═══ */
 .hero {
-  min-height: 100vh;
-  padding: 8rem 2rem 6rem;
+  height: 90vh;
+  max-height: 90vh;
+  padding: 2rem;
   display: flex;
   align-items: center;
+  justify-content: center;
   position: relative;
   background: linear-gradient(135deg, var(--off-white) 0%, #F5F4F0 100%);
 }
@@ -278,7 +280,7 @@ header .nav-links a:hover::after {
 
 /* ═══ SECTIONS ═══ */
 section {
-  padding: 10rem 2rem;
+  padding: 7.5rem 2rem;
 }
 
 .container {
@@ -435,7 +437,6 @@ section {
 }
 
 .service-card .price {
-  display: none;
   margin-top: 2rem;
   padding-top: 1.5rem;
   border-top: 1px solid var(--border);
@@ -444,7 +445,9 @@ section {
   font-size: 1.75rem;
   color: var(--charcoal-dark);
   opacity: 0;
-  transition: opacity 0.2s ease;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 0.2s ease, max-height 0.3s ease;
 }
 
 .service-card .inquiry-text {
@@ -452,51 +455,69 @@ section {
   padding-top: 2rem;
   font-size: 0.85rem;
   color: var(--warm-gray);
-  text-transform: lowercase;
+  font-style: italic;
   letter-spacing: 0.02em;
-}
-
-.service-card .cta-button {
-  display: none;
-  margin-top: 1.5rem;
-  opacity: 0;
+  opacity: 1;
   transition: opacity 0.2s ease;
 }
 
-.service-card.reveal .price {
-  display: block;
-  opacity: 1;
+.service-card .cta-button {
+  margin-top: 1.5rem;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 0.25s ease 50ms, max-height 0.3s ease;
 }
 
-.service-card.reveal .cta-button {
-  display: block;
-  opacity: 1;
-}
-
-.service-card.reveal .inquiry-text {
-  display: none;
-}
-
-.service-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 32px rgba(31, 42, 55, 0.08);
-  border-color: var(--brass);
-}
-
+/* Hover state for desktop */
 @media (hover: hover) {
+  .service-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(31, 42, 55, 0.08);
+    border-color: var(--brass);
+  }
+
   .service-card:hover .price {
-    display: block;
     opacity: 1;
+    max-height: 200px;
   }
 
   .service-card:hover .cta-button {
-    display: block;
     opacity: 1;
+    max-height: 100px;
   }
 
   .service-card:hover .inquiry-text {
-    display: none;
+    opacity: 0;
   }
+
+  .service-card:hover .chevron-hint {
+    transform: rotate(180deg);
+  }
+}
+
+/* Reveal state for mobile tap */
+.service-card.reveal .price {
+  opacity: 1;
+  max-height: 200px;
+}
+
+.service-card.reveal .cta-button {
+  opacity: 1;
+  max-height: 100px;
+}
+
+.service-card.reveal .inquiry-text {
+  opacity: 0;
+}
+
+.service-card.reveal .chevron-hint {
+  transform: rotate(180deg);
+}
+
+/* Base hover effect even without reveal */
+.service-card:hover {
+  border-color: var(--brass);
 }
 
 .chevron-hint {
@@ -564,7 +585,7 @@ section {
 .focus-list-numbered li {
   display: flex;
   align-items: baseline;
-  gap: 1.5rem;
+  gap: 0.75rem;
   font-size: 1rem;
   color: var(--charcoal);
   line-height: 1.6;
@@ -576,6 +597,7 @@ section {
   font-size: 1.5rem;
   color: var(--brass);
   flex-shrink: 0;
+  min-width: 40px;
 }
 
 @media (max-width: 768px) {
@@ -698,8 +720,9 @@ footer .copyright {
   }
 
   .hero {
-    min-height: 80vh;
-    padding: 5rem 1.5rem;
+    height: 75vh;
+    max-height: 75vh;
+    padding: 2rem 1.5rem;
   }
 
   .hero-content {
@@ -734,7 +757,7 @@ footer .copyright {
   }
 
   section {
-    padding: 6rem 1.5rem;
+    padding: 4rem 1.5rem;
   }
 
   .service-card {
@@ -742,7 +765,11 @@ footer .copyright {
   }
 
   .chevron-hint {
-    display: block;
+    display: inline-block;
+  }
+
+  .diagnostic-callout {
+    padding: 5rem 1.5rem;
   }
 }
 
