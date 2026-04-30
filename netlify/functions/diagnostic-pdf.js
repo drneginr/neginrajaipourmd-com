@@ -332,7 +332,7 @@ exports.handler = async (event) => {
             <p style="font-size: 1.1rem; line-height: 1.7; color: #1A1A1A;">Dear ${firstName},</p>
 
             <p style="font-size: 1.1rem; line-height: 1.7; color: #1A1A1A;">
-              Thank you for completing the Practice Diagnostic. Your personalized 2-page brief is attached — it identifies the structural constraint limiting your practice growth and outlines the specific sequence of decisions that will resolve it.
+              Thank you for completing the Practice Diagnostic. Your personalized brief is attached — it identifies the structural constraint limiting your practice growth and outlines the specific sequence of decisions that will resolve it.
             </p>
 
             <p style="font-size: 1.1rem; line-height: 1.7; color: #1A1A1A;">
