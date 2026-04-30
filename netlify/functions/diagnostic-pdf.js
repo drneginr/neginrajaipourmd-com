@@ -260,7 +260,7 @@ exports.handler = async (event) => {
 
     // Send email with PDF attachment via Resend
     await resend.emails.send({
-      from: 'Dr. Negin Rajaipour <hello@neginrajaipourmd.com>',
+      from: 'Dr. Negin Rajaipour <office@neginrajaipourmd.com>',
       to: email,
       subject: `Your Practice Diagnostic Results: ${constraints[result.constraint].name}`,
       html: `
@@ -321,8 +321,8 @@ exports.handler = async (event) => {
 
     // Also send notification to Dr. Rajaipour
     await resend.emails.send({
-      from: 'Practice Diagnostic <diagnostics@neginrajaipourmd.com>',
-      to: 'nrajaipour@gmail.com',
+      from: 'Practice Diagnostic <office@neginrajaipourmd.com>',
+      to: 'office@neginrajaipourmd.com',
       subject: `New Diagnostic Completed: ${constraints[result.constraint].name}`,
       html: `
         <h2>New Practice Diagnostic Submission</h2>

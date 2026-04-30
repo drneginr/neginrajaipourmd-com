@@ -350,6 +350,16 @@ document.addEventListener('DOMContentLoaded', () => {
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
+      const errorMessage = document.getElementById('emailError');
+      const submitBtn = document.getElementById('diagnosticSubmitBtn');
+
+      // Hide any previous error
+      errorMessage.style.display = 'none';
+
+      // Disable submit button and show loading state
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+
       const firstName = document.getElementById('firstName').value;
       const email = document.getElementById('email').value;
       const result = window.diagnosticResult;
@@ -371,11 +381,18 @@ document.addEventListener('DOMContentLoaded', () => {
           form.style.display = 'none';
           document.getElementById('emailSuccess').style.display = 'block';
         } else {
-          alert('There was an error sending your diagnostic brief. Please try again.');
+          // Show inline error message
+          const errorData = await response.json().catch(() => ({}));
+          console.error('Diagnostic submission error:', errorData);
+          errorMessage.style.display = 'block';
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Send My Diagnostic Brief';
         }
       } catch (error) {
-        console.error('Error:', error);
-        alert('There was an error sending your diagnostic brief. Please try again.');
+        console.error('Diagnostic submission error:', error);
+        errorMessage.style.display = 'block';
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send My Diagnostic Brief';
       }
     });
   }
