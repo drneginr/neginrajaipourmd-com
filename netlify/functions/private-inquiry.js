@@ -41,29 +41,69 @@ export default async (event) => {
       };
     }
 
-    // Send notification email to office@neginrajaipourmd.com
-    await resend.emails.send({
-      from: 'Private Inquiry <office@neginrajaipourmd.com>',
-      to: 'office@neginrajaipourmd.com',
-      reply_to: email,
-      subject: `New Private Inquiry: ${inquiryType}`,
-      html: `
-        <h2>New Private Inquiry Received</h2>
+    // EMAIL A: Admin notification to office@neginrajaipourmd.com
+    console.log('Sending inquiry admin notification to office@neginrajaipourmd.com');
+    try {
+      await resend.emails.send({
+        from: 'Private Inquiry <office@neginrajaipourmd.com>',
+        to: 'office@neginrajaipourmd.com',
+        reply_to: email,
+        subject: `New Private Inquiry — ${firstName} — ${inquiryType}`,
+        html: `
+          <h2 style="color: #1A1A1A; margin-bottom: 1.5rem;">New Private Inquiry Received</h2>
 
-        <p><strong>From:</strong> ${firstName}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Phone:</strong> ${phone}</p>
-        <p><strong>Organization:</strong> ${organization}</p>
-        <p><strong>Role:</strong> ${role}</p>
-        <p><strong>Nature of Inquiry:</strong> ${inquiryType}</p>
-        <p><strong>Timeline:</strong> ${timeline}</p>
+          <p><strong>From:</strong> ${firstName}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Phone:</strong> ${phone}</p>
+          <p><strong>Organization:</strong> ${organization}</p>
+          <p><strong>Role:</strong> ${role}</p>
+          <p><strong>Nature of Inquiry:</strong> ${inquiryType}</p>
+          <p><strong>Timeline:</strong> ${timeline}</p>
 
-        ${message ? `<p><strong>Additional Details:</strong><br>${message.replace(/\n/g, '<br>')}</p>` : ''}
+          ${message ? `<p><strong>Additional Details:</strong><br>${message.replace(/\n/g, '<br>')}</p>` : ''}
 
-        <hr style="margin: 2rem 0; border: none; border-top: 1px solid #ddd;">
-        <p style="font-size: 0.9rem; color: #666;">Submitted from neginrajaipourmd.com</p>
-      `,
-    });
+          <p style="margin-top: 2rem; color: #666; font-size: 0.9rem;">
+            Submitted: ${new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angeles' })} PT
+          </p>
+        `,
+      });
+      console.log('Inquiry admin notification sent successfully');
+    } catch (adminError) {
+      console.error('Failed to send inquiry admin notification:', adminError);
+      // Don't fail the whole function if admin notification fails
+    }
+
+    // EMAIL B: User confirmation
+    console.log(`Sending inquiry confirmation to user: ${email}`);
+    try {
+      await resend.emails.send({
+        from: 'Dr. Negin Rajaipour <office@neginrajaipourmd.com>',
+        to: email,
+        subject: 'Your inquiry has been received',
+        html: `
+          <div style="font-family: Georgia, serif; max-width: 600px; margin: 0 auto; padding: 2rem;">
+            <p style="font-size: 1.1rem; line-height: 1.7; color: #1A1A1A;">Dear ${firstName},</p>
+
+            <p style="font-size: 1.1rem; line-height: 1.7; color: #1A1A1A;">
+              Thank you for reaching out. Your inquiry has been received and will be reviewed personally within two business days.
+            </p>
+
+            <p style="font-size: 1.1rem; line-height: 1.7; color: #1A1A1A;">
+              All correspondence is treated as confidential.
+            </p>
+
+            <p style="font-size: 1.1rem; line-height: 1.7; color: #1A1A1A; margin-top: 2rem;">
+              — Dr. Negin Rajaipour, MD<br>
+              <span style="color: #666; font-size: 0.95rem;">office@neginrajaipourmd.com</span>
+            </p>
+          </div>
+        `,
+      });
+      console.log('Inquiry user confirmation sent successfully');
+    } catch (userError) {
+      console.error('Failed to send inquiry user confirmation:', userError);
+      // Don't fail if user confirmation fails - admin notification is more critical
+    }
 
     return {
       statusCode: 200,

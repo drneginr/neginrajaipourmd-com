@@ -258,81 +258,88 @@ exports.handler = async (event) => {
     const pdfBuffer = await generatePDF(firstName, result.constraint);
     const pdfBase64 = pdfBuffer.toString('base64');
 
-    // Send email with PDF attachment via Resend
-    await resend.emails.send({
-      from: 'Dr. Negin Rajaipour <office@neginrajaipourmd.com>',
-      to: email,
-      subject: `Your Practice Diagnostic Results: ${constraints[result.constraint].name}`,
-      html: `
-        <div style="font-family: 'Cormorant Garamond', Georgia, serif; max-width: 600px; margin: 0 auto; padding: 2rem;">
-          <h1 style="color: #C9A35E; font-size: 2rem; margin-bottom: 1.5rem;">Your Diagnostic Results Are Here</h1>
+    // EMAIL A: Admin notification to office@neginrajaipourmd.com
+    console.log('Sending admin notification to office@neginrajaipourmd.com');
+    try {
+      await resend.emails.send({
+        from: 'Practice Diagnostic <office@neginrajaipourmd.com>',
+        to: 'office@neginrajaipourmd.com',
+        subject: `New Diagnostic — ${firstName} — ${constraints[result.constraint].name}`,
+        html: `
+          <h2 style="color: #1A1A1A; margin-bottom: 1.5rem;">New Practice Diagnostic Submission</h2>
 
-          <p style="font-size: 1.1rem; line-height: 1.7; color: #1A1A1A;">Dear ${firstName},</p>
+          <p><strong>Submitter:</strong> ${firstName}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Primary Constraint:</strong> ${constraints[result.constraint].name}</p>
 
-          <p style="font-size: 1.1rem; line-height: 1.7; color: #1A1A1A;">
-            Thank you for completing the Practice Diagnostic. Based on your responses, your primary constraint pattern is:
-          </p>
-
-          <div style="margin: 2rem 0; padding: 1.5rem; background: #F5F1EA; border-left: 4px solid #C9A35E;">
-            <h2 style="color: #C9A35E; margin: 0 0 0.5rem 0; font-size: 1.5rem;">${constraints[result.constraint].name}</h2>
-            <p style="font-style: italic; color: #1A1A1A; margin: 0; font-size: 1.05rem;">
-              ${constraints[result.constraint].tagline}
-            </p>
-          </div>
-
-          <p style="font-size: 1.1rem; line-height: 1.7; color: #1A1A1A;">
-            Your personalized 2-page diagnostic brief is attached as a PDF. It includes:
-          </p>
-
-          <ul style="font-size: 1.05rem; line-height: 1.8; color: #1A1A1A;">
-            <li>Detailed analysis of your constraint pattern</li>
-            <li>Common symptoms to watch for</li>
-            <li>Immediate next steps</li>
-            <li>Strategic questions to guide your planning</li>
+          <h3 style="margin-top: 2rem; color: #1A1A1A;">Pattern Distribution</h3>
+          <ul style="line-height: 1.8;">
+            ${Object.entries(result.patternCounts || {}).map(([key, value]) => {
+              const patternNames = {
+                demand: 'Demand Generation',
+                capacity: 'Capacity',
+                positioning: 'Positioning & Pricing',
+                monetization: 'Monetization',
+                team: 'Team & Delegation'
+              };
+              return `<li><strong>${patternNames[key] || key}:</strong> ${value}/4</li>`;
+            }).join('')}
           </ul>
 
-          <p style="font-size: 1.1rem; line-height: 1.7; color: #1A1A1A;">
-            This diagnostic identifies <em>what's</em> constraining growth. The next conversation is about <em>how</em> to address it in your specific context.
+          <p style="margin-top: 2rem; color: #666; font-size: 0.9rem;">
+            Submitted: ${new Date().toLocaleString('en-US', { timeZone: 'America/Los_Angeles' })} PT
           </p>
+        `,
+      });
+      console.log('Admin notification sent successfully');
+    } catch (adminError) {
+      console.error('Failed to send admin notification:', adminError);
+      // Don't fail the whole function if admin notification fails
+    }
 
-          <div style="text-align: center; margin: 2.5rem 0;">
-            <a href="https://neginrajaipourmd.com/private-inquiry" style="display: inline-block; background: #C9A35E; color: #1A1A1A; padding: 1rem 2rem; text-decoration: none; font-weight: 700; font-size: 0.9rem; letter-spacing: 0.1em; text-transform: uppercase; border-radius: 4px;">
-              Schedule a Strategy Conversation
-            </a>
+    // EMAIL B: User-facing brief with PDF attachment
+    console.log(`Sending diagnostic brief to user: ${email}`);
+    try {
+      await resend.emails.send({
+        from: 'Dr. Negin Rajaipour <office@neginrajaipourmd.com>',
+        to: email,
+        subject: 'Your Practice Diagnostic Brief',
+        html: `
+          <div style="font-family: Georgia, serif; max-width: 600px; margin: 0 auto; padding: 2rem;">
+            <p style="font-size: 1.1rem; line-height: 1.7; color: #1A1A1A;">Dear ${firstName},</p>
+
+            <p style="font-size: 1.1rem; line-height: 1.7; color: #1A1A1A;">
+              Thank you for completing the Practice Diagnostic. Your personalized 2-page brief is attached — it identifies the structural constraint limiting your practice growth and outlines the specific sequence of decisions that will resolve it.
+            </p>
+
+            <p style="font-size: 1.1rem; line-height: 1.7; color: #1A1A1A;">
+              The diagnostic identifies <em>what's</em> constraining growth. The next conversation is about <em>how</em> to address it in your specific context.
+            </p>
+
+            <div style="text-align: center; margin: 2.5rem 0;">
+              <a href="https://neginrajaipourmd.com/private-inquiry.html" style="display: inline-block; background: #A8854B; color: #FFFFFF; padding: 1rem 2rem; text-decoration: none; font-weight: 600; font-size: 0.95rem; border-radius: 4px;">
+                Request a Private Conversation
+              </a>
+            </div>
+
+            <p style="font-size: 1.1rem; line-height: 1.7; color: #1A1A1A;">
+              — Dr. Negin Rajaipour, MD<br>
+              <span style="color: #666; font-size: 0.95rem;">office@neginrajaipourmd.com</span>
+            </p>
           </div>
-
-          <p style="font-size: 1.1rem; line-height: 1.7; color: #1A1A1A;">
-            Best,<br>
-            <strong>Dr. Negin Rajaipour, MD</strong><br>
-            <span style="color: #666; font-size: 0.95rem;">Founder & CEO, VitaRegen Medical™</span>
-          </p>
-
-          <hr style="margin: 2rem 0; border: none; border-top: 1px solid #ddd;">
-          <p style="font-size: 0.85rem; color: #888;">© 2026 VitaRegen Medical™. All Rights Reserved.</p>
-        </div>
-      `,
-      attachments: [
-        {
-          filename: `Practice-Diagnostic-${firstName}.pdf`,
-          content: pdfBase64,
-        },
-      ],
-    });
-
-    // Also send notification to Dr. Rajaipour
-    await resend.emails.send({
-      from: 'Practice Diagnostic <office@neginrajaipourmd.com>',
-      to: 'office@neginrajaipourmd.com',
-      subject: `New Diagnostic Completed: ${constraints[result.constraint].name}`,
-      html: `
-        <h2>New Practice Diagnostic Submission</h2>
-        <p><strong>Name:</strong> ${firstName}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Primary Constraint:</strong> ${constraints[result.constraint].name}</p>
-        <p><strong>Pattern Distribution:</strong></p>
-        <pre>${JSON.stringify(result.patternCounts, null, 2)}</pre>
-      `,
-    });
+        `,
+        attachments: [
+          {
+            filename: `Practice-Diagnostic-${firstName}.pdf`,
+            content: pdfBase64,
+          },
+        ],
+      });
+      console.log('User diagnostic brief sent successfully');
+    } catch (userError) {
+      console.error('Failed to send user diagnostic brief:', userError);
+      throw userError; // This one should fail the function if it doesn't work
+    }
 
     return {
       statusCode: 200,
