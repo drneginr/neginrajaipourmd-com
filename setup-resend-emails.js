@@ -13,8 +13,9 @@
  */
 
 const { Resend } = require('resend');
+require('dotenv').config();
 
-const resend = new Resend('process.env.RESEND_API_KEY');
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 // Email templates from email-drip-sequence.md
 const emails = [
