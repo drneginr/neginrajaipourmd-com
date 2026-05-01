@@ -18,6 +18,7 @@
   "private": true,
   "type": "commonjs",
   "dependencies": {
+    "@hubspot/api-client": "^13.5.0",
     "@netlify/blobs": "^10.7.4",
     "@netlify/functions": "^5.2.0",
     "node-fetch": "^2.7.0",

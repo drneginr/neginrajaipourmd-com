@@ -177,15 +177,38 @@
       const data = Object.fromEntries(formData);
 
       try {
-        const response = await fetch('/api/private-inquiry', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data),
-        });
+        // Call both inquiry processing and HubSpot contact creation in parallel
+        const [inquiryResponse, hubspotResponse] = await Promise.all([
+          fetch('/api/private-inquiry', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+          }),
+          fetch('/api/hubspot-create-contact', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              firstName: data.firstName,
+              email: data.email,
+              phone: data.phone,
+              organization: data.organization,
+              role: data.role,
+              inquiryType: data.inquiryType,
+              message: data.message,
+              source: 'inquiry'
+            })
+          })
+        ]);
 
-        if (response.ok) {
+        if (inquiryResponse.ok) {
+          // HubSpot contact creation is non-blocking - log if it fails but don't block user flow
+          if (!hubspotResponse.ok) {
+            console.warn('HubSpot contact creation failed, but inquiry was submitted successfully');
+          }
           form.style.display = 'none';
           successMessage.style.display = 'block';
           // Reduce section padding to eliminate large gap

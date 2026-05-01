@@ -369,19 +369,38 @@ document.addEventListener('DOMContentLoaded', () => {
       const result = window.diagnosticResult;
 
       try {
-        const response = await fetch('/api/diagnostic-pdf', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            firstName,
-            email,
-            result
+        // Call both PDF generation and HubSpot contact creation in parallel
+        const [pdfResponse, hubspotResponse] = await Promise.all([
+          fetch('/api/diagnostic-pdf', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              firstName,
+              email,
+              result
+            })
+          }),
+          fetch('/api/hubspot-create-contact', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              firstName,
+              email,
+              constraint: result.constraint,
+              source: 'diagnostic'
+            })
           })
-        });
+        ]);
 
-        if (response.ok) {
+        if (pdfResponse.ok) {
+          // HubSpot contact creation is non-blocking - log if it fails but don't block user flow
+          if (!hubspotResponse.ok) {
+            console.warn('HubSpot contact creation failed, but PDF was sent successfully');
+          }
           form.style.display = 'none';
           document.getElementById('emailSuccess').style.display = 'block';
         } else {
