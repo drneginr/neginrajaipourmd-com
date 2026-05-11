@@ -10,20 +10,13 @@ exports.handler = async (event, context) => {
     logs.push(`Event: ${Object.keys(event).join(', ')}`);
     logs.push(`Context: ${Object.keys(context || {}).join(', ')}`);
 
-    // Check if event.blobs exists
-    logs.push(`event.blobs exists: ${!!event.blobs}`);
-    logs.push(`event.blobs type: ${typeof event.blobs}`);
-
-    // Try to get store via event.blobs
-    if (event.blobs) {
-      logs.push('Calling event.blobs.getStore...');
-      const testStore = event.blobs.getStore('contacts');
-      logs.push('✅ event.blobs.getStore() succeeded');
-    } else {
-      logs.push('Trying regular getStore...');
-      const testStore = getStore('contacts');
-      logs.push('✅ getStore() succeeded');
-    }
+    // Try getStore with siteID config
+    logs.push('Calling getStore with siteID...');
+    const testStore = getStore({
+      name: 'contacts',
+      siteID: '8039b94c-e1de-4c21-8b1a-b6724d1693e4'
+    });
+    logs.push('✅ getStore() succeeded');
 
     // Try to write
     logs.push('Attempting write...');
