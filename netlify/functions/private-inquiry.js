@@ -119,7 +119,7 @@ exports.handler = async (event) => {
     // Enroll in advisory email sequence
     console.log(`Enrolling ${email} in advisory sequence`);
     try {
-      const contactsStore = getStore('contacts');
+      const contactsStore = event.blobs.getStore('contacts');
       const timestamp = new Date().toISOString();
       const unsubscribeToken = Buffer.from(email).toString('base64');
 
