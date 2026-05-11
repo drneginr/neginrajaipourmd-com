@@ -19,9 +19,10 @@ export default async (req, context) => {
     if (process.env.NETLIFY_BLOBS_CONTEXT) {
       logs.push('NETLIFY_BLOBS_CONTEXT exists');
 
-      // Try to parse it
+      // Try to parse it (it's base64 encoded)
       try {
-        const blobsContext = JSON.parse(process.env.NETLIFY_BLOBS_CONTEXT);
+        const decoded = Buffer.from(process.env.NETLIFY_BLOBS_CONTEXT, 'base64').toString('utf-8');
+        const blobsContext = JSON.parse(decoded);
         logs.push(`Context keys: ${Object.keys(blobsContext).join(', ')}`);
 
         // Try to use it with getStore
