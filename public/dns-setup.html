@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DNS Setup for Email - neginrajaipourmd.com</title>
+  <style>
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #f5f5f5;
+      color: #1A1A1A;
+    }
+    .container {
+      background: white;
+      padding: 40px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #A8854B;
+      margin-bottom: 10px;
+    }
+    .status {
+      padding: 15px;
+      background: #fff3cd;
+      border-left: 4px solid #ffc107;
+      margin: 20px 0;
+    }
+    .record {
+      background: #f8f9fa;
+      padding: 20px;
+      margin: 20px 0;
+      border-left: 4px solid #A8854B;
+      border-radius: 4px;
+    }
+    .record h3 {
+      margin-top: 0;
+      color: #A8854B;
+    }
+    .field {
+      margin: 10px 0;
+      font-family: 'Monaco', 'Courier New', monospace;
+      font-size: 14px;
+    }
+    .field strong {
+      display: inline-block;
+      width: 100px;
+      color: #666;
+    }
+    .value {
+      background: #e9ecef;
+      padding: 8px 12px;
+      border-radius: 4px;
+      word-break: break-all;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .value:hover {
+      background: #dee2e6;
+    }
+    .copy-btn {
+      background: #A8854B;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+    .copy-btn:hover {
+      background: #8a6d3e;
+    }
+    .steps {
+      background: #e3f2fd;
+      padding: 20px;
+      border-radius: 4px;
+      margin: 20px 0;
+    }
+    .steps ol {
+      margin: 10px 0 10px 20px;
+      padding: 0;
+    }
+    .steps li {
+      margin: 10px 0;
+      line-height: 1.6;
+    }
+    .success {
+      color: #28a745;
+      font-weight: bold;
+    }
+    a {
+      color: #A8854B;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Email DNS Setup Required</h1>
+    <p>To enable emails from <strong>office@neginrajaipourmd.com</strong>, add these 3 DNS records:</p>
+
+    <div class="status">
+      <strong>⚠️ Current Status:</strong> Domain registered in Resend but not verified. Emails can only send from sandbox address until DNS is configured.
+    </div>
+
+    <div class="steps">
+      <h3>📍 Where to Add These Records</h3>
+      <ol>
+        <li>Go to <a href="https://app.netlify.com/sites/neginrajaipourmd/settings/domain#dns" target="_blank">Netlify DNS Settings</a></li>
+        <li>Click "Add DNS record" for each record below</li>
+        <li>Copy/paste the values exactly as shown</li>
+        <li>Wait 5-10 minutes for propagation</li>
+        <li>Verify at <a href="https://resend.com/domains" target="_blank">Resend Domains</a></li>
+      </ol>
+    </div>
+
+    <!-- Record 1: DKIM -->
+    <div class="record">
+      <h3>1. DKIM Record (Email Authentication)</h3>
+      <div class="field">
+        <strong>Type:</strong> <span class="value" onclick="copy(this)">TXT</span>
+      </div>
+      <div class="field">
+        <strong>Name:</strong> <span class="value" onclick="copy(this)">resend._domainkey</span>
+      </div>
+      <div class="field">
+        <strong>Value:</strong>
+        <div class="value" onclick="copy(this)">p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDK91fROJ+FcueYB1zz4JXcq8Pd3S55D0QeQ1c4upDygi12yDt44THGXSnh2piP+Qxj62H/cZK0ZD4AERs/rls7G4tn/+M/xSz8kFR36XGXqLnTIB5Xr/bdkAmu5XxvWGpADA4MapCBVA1Z3nh0wSb2Aqjv6mtZTMdqpaz6RqH+gwIDAQAB</div>
+      </div>
+      <div class="field">
+        <strong>TTL:</strong> <span class="value" onclick="copy(this)">3600</span>
+      </div>
+    </div>
+
+    <!-- Record 2: SPF MX -->
+    <div class="record">
+      <h3>2. SPF MX Record (Mail Server)</h3>
+      <div class="field">
+        <strong>Type:</strong> <span class="value" onclick="copy(this)">MX</span>
+      </div>
+      <div class="field">
+        <strong>Name:</strong> <span class="value" onclick="copy(this)">send</span>
+      </div>
+      <div class="field">
+        <strong>Value:</strong> <span class="value" onclick="copy(this)">feedback-smtp.us-east-1.amazonses.com</span>
+      </div>
+      <div class="field">
+        <strong>Priority:</strong> <span class="value" onclick="copy(this)">10</span>
+      </div>
+      <div class="field">
+        <strong>TTL:</strong> <span class="value" onclick="copy(this)">3600</span>
+      </div>
+    </div>
+
+    <!-- Record 3: SPF TXT -->
+    <div class="record">
+      <h3>3. SPF TXT Record (Anti-Spoofing)</h3>
+      <div class="field">
+        <strong>Type:</strong> <span class="value" onclick="copy(this)">TXT</span>
+      </div>
+      <div class="field">
+        <strong>Name:</strong> <span class="value" onclick="copy(this)">send</span>
+      </div>
+      <div class="field">
+        <strong>Value:</strong> <span class="value" onclick="copy(this)">v=spf1 include:amazonses.com ~all</span>
+      </div>
+      <div class="field">
+        <strong>TTL:</strong> <span class="value" onclick="copy(this)">3600</span>
+      </div>
+    </div>
+
+    <div class="steps">
+      <h3>✅ After DNS is Configured</h3>
+      <ul style="list-style: none; padding: 0;">
+        <li class="success">✓ Emails will send from office@neginrajaipourmd.com</li>
+        <li class="success">✓ Reply-to will be correct business address</li>
+        <li class="success">✓ Drip emails will work for all contacts</li>
+        <li class="success">✓ Victoria and your test emails will send</li>
+      </ul>
+    </div>
+
+    <p style="margin-top: 30px; color: #666; font-size: 14px;">
+      <strong>Need help?</strong> Call the trigger function to test:
+      <code style="background: #f8f9fa; padding: 4px 8px; border-radius: 4px;">curl https://neginrajaipourmd.netlify.app/trigger-test-email</code>
+    </p>
+  </div>
+
+  <script>
+    function copy(element) {
+      const text = element.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        const original = element.style.background;
+        element.style.background = '#28a745';
+        element.style.color = 'white';
+        setTimeout(() => {
+          element.style.background = original;
+          element.style.color = '';
+        }, 500);
+      });
+    }
+  </script>
+</body>
+</html>
