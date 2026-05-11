@@ -55,7 +55,7 @@ export default async (req, context) => {
       .replace('{{UNSUBSCRIBE_LINK}}', `https://neginrajaipourmd.com/unsubscribe?token=${contact.unsubscribeToken}`);
 
     // Send email
-    await resend.emails.send({
+    const emailResult = await resend.emails.send({
       from: 'Dr. Negin Rajaipour <office@neginrajaipourmd.com>',
       to: contact.email,
       subject: nextEmail.subject,
@@ -63,6 +63,7 @@ export default async (req, context) => {
     });
 
     logs.push('✅ Email sent via Resend');
+    logs.push(`Resend response: ${JSON.stringify(emailResult)}`);
 
     // Update contact
     contact.currentEmailIndex++;
