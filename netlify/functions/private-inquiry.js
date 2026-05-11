@@ -154,9 +154,19 @@ exports.handler = async (event) => {
       console.error('Failed to enroll in sequence:', enrollError);
       console.error('Enrollment error details:', {
         message: enrollError.message,
-        name: enrollError.name
+        name: enrollError.name,
+        stack: enrollError.stack
       });
-      // Don't fail the whole function if enrollment fails
+      // Return success but include enrollment error for debugging
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({
+          success: true,
+          message: 'Inquiry submitted successfully',
+          enrollmentError: enrollError.message
+        }),
+      };
     }
 
     return {
