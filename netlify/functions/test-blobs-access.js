@@ -10,10 +10,20 @@ exports.handler = async (event, context) => {
     logs.push(`Event: ${Object.keys(event).join(', ')}`);
     logs.push(`Context: ${Object.keys(context || {}).join(', ')}`);
 
-    // Try to get store
-    logs.push('Calling getStore...');
-    const testStore = getStore('contacts');
-    logs.push('✅ getStore() succeeded');
+    // Check if event.blobs exists
+    logs.push(`event.blobs exists: ${!!event.blobs}`);
+    logs.push(`event.blobs type: ${typeof event.blobs}`);
+
+    // Try to get store via event.blobs
+    if (event.blobs) {
+      logs.push('Calling event.blobs.getStore...');
+      const testStore = event.blobs.getStore('contacts');
+      logs.push('✅ event.blobs.getStore() succeeded');
+    } else {
+      logs.push('Trying regular getStore...');
+      const testStore = getStore('contacts');
+      logs.push('✅ getStore() succeeded');
+    }
 
     // Try to write
     logs.push('Attempting write...');
