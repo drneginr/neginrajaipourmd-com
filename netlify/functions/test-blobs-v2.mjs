@@ -8,6 +8,12 @@ export default async (req, context) => {
     logs.push('Testing Netlify Blobs (Functions 2.0)...');
     logs.push(`context keys: ${Object.keys(context).join(', ')}`);
     logs.push(`context.store exists: ${!!context.store}`);
+    logs.push(`context.site: ${JSON.stringify(context.site)}`);
+    logs.push(`context.deploy: ${JSON.stringify(context.deploy)}`);
+
+    // Check all NETLIFY env vars
+    const netlifyEnvs = Object.keys(process.env).filter(k => k.includes('NETLIFY') || k.includes('BLOB'));
+    logs.push(`Netlify/Blob env vars: ${netlifyEnvs.join(', ') || 'none'}`);
 
     // Try using context.store
     if (context.store) {
