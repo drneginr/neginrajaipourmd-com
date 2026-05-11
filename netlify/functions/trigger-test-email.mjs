@@ -54,9 +54,9 @@ export default async (req, context) => {
       .replace('{{PHYSICAL_ADDRESS}}', '1615 Mater Dei Drive, Chula Vista, CA 91913')
       .replace('{{UNSUBSCRIBE_LINK}}', `https://neginrajaipourmd.com/unsubscribe?token=${contact.unsubscribeToken}`);
 
-    // Send email
+    // Send email - using Resend sandbox domain for testing
     const emailResult = await resend.emails.send({
-      from: 'Dr. Negin Rajaipour <office@neginrajaipourmd.com>',
+      from: 'Dr. Negin Rajaipour <onboarding@resend.dev>',
       to: contact.email,
       subject: nextEmail.subject,
       html
