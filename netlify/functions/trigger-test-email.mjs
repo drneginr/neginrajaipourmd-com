@@ -54,9 +54,9 @@ export default async (req, context) => {
       .replace('{{PHYSICAL_ADDRESS}}', '1615 Mater Dei Drive, Chula Vista, CA 91913')
       .replace('{{UNSUBSCRIBE_LINK}}', `https://neginrajaipourmd.com/unsubscribe?token=${contact.unsubscribeToken}`);
 
-    // Send email - using Resend sandbox domain for testing
+    // Send email - using mye3method.com which should be verified
     const emailResult = await resend.emails.send({
-      from: 'Dr. Negin Rajaipour <onboarding@resend.dev>',
+      from: 'Dr. Negin Rajaipour <hello@mye3method.com>',
       to: contact.email,
       subject: nextEmail.subject,
       html
