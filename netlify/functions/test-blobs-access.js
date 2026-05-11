@@ -10,12 +10,16 @@ exports.handler = async (event, context) => {
     logs.push(`Event: ${Object.keys(event).join(', ')}`);
     logs.push(`Context: ${Object.keys(context || {}).join(', ')}`);
 
-    // Try getDeployStore (should auto-configure from environment)
-    logs.push('Calling getDeployStore...');
-    const testStore = getDeployStore({
-      name: 'contacts'
-    });
-    logs.push('✅ getDeployStore() succeeded');
+    // Check environment variables
+    logs.push(`NETLIFY env: ${!!process.env.NETLIFY}`);
+    logs.push(`DEPLOY_ID: ${!!process.env.DEPLOY_ID}`);
+    logs.push(`SITE_ID: ${!!process.env.SITE_ID}`);
+    logs.push(`context.deployID: ${context?.deployID || 'undefined'}`);
+
+    // Try simple getStore with just name
+    logs.push('Calling getStore with just name...');
+    const testStore = getStore('contacts');
+    logs.push('✅ getStore() succeeded');
 
     // Try to write
     logs.push('Attempting write...');
