@@ -21,8 +21,11 @@ export default async (req, context) => {
       ...blobsContext
     });
 
-    const contactJson = await contactsStore.get(TEST_EMAIL);
-    const contact = JSON.parse(contactJson);
+    const contactData = await contactsStore.get(TEST_EMAIL);
+    logs.push(`Raw data type: ${typeof contactData}`);
+    logs.push(`Raw data preview: ${contactData?.substring?.(0, 100) || contactData}`);
+
+    const contact = typeof contactData === 'string' ? JSON.parse(contactData) : contactData;
     logs.push(`Contact: ${contact.name}, index: ${contact.currentEmailIndex}`);
 
     // Read advisory sequence
