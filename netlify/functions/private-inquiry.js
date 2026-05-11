@@ -1,5 +1,5 @@
 const { Resend } = require('resend');
-const { getStore } = require('@netlify/blobs');
+const { getDeployStore } = require('@netlify/blobs');
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -119,9 +119,8 @@ exports.handler = async (event) => {
     // Enroll in advisory email sequence
     console.log(`Enrolling ${email} in advisory sequence`);
     try {
-      const contactsStore = getStore({
-        name: 'contacts',
-        siteID: '8039b94c-e1de-4c21-8b1a-b6724d1693e4'
+      const contactsStore = getDeployStore({
+        name: 'contacts'
       });
       const timestamp = new Date().toISOString();
       const unsubscribeToken = Buffer.from(email).toString('base64');

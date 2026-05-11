@@ -1,4 +1,4 @@
-const { getStore } = require('@netlify/blobs');
+const { getDeployStore } = require('@netlify/blobs');
 const { sequences, getBaseTemplate } = require('./email-data.js');
 
 // Render email with base template
@@ -17,7 +17,7 @@ exports.handler = async () => {
   console.log('Processing email sequences...');
 
   try {
-    const contactsStore = getStore('contacts');
+    const contactsStore = getDeployStore({ name: 'contacts' });
     const { blobs } = await contactsStore.list();
 
     let processed = 0;

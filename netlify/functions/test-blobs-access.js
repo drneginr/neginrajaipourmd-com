@@ -1,6 +1,6 @@
 // Simple test function to diagnose Blobs access in production
 
-const { getStore } = require('@netlify/blobs');
+const { getStore, getDeployStore } = require('@netlify/blobs');
 
 exports.handler = async (event, context) => {
   const logs = [];
@@ -10,13 +10,12 @@ exports.handler = async (event, context) => {
     logs.push(`Event: ${Object.keys(event).join(', ')}`);
     logs.push(`Context: ${Object.keys(context || {}).join(', ')}`);
 
-    // Try getStore with siteID config
-    logs.push('Calling getStore with siteID...');
-    const testStore = getStore({
-      name: 'contacts',
-      siteID: '8039b94c-e1de-4c21-8b1a-b6724d1693e4'
+    // Try getDeployStore (should auto-configure from environment)
+    logs.push('Calling getDeployStore...');
+    const testStore = getDeployStore({
+      name: 'contacts'
     });
-    logs.push('✅ getStore() succeeded');
+    logs.push('✅ getDeployStore() succeeded');
 
     // Try to write
     logs.push('Attempting write...');
