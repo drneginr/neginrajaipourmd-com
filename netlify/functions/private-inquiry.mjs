@@ -1,45 +1,40 @@
-const { Resend } = require('resend');
-const { getStore } = require('@netlify/blobs');
+import { Resend } from 'resend';
+import { getStore } from '@netlify/blobs';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-exports.handler = async (event) => {
+export default async (req, context) => {
   // CORS headers
   const headers = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': 'Content-Type',
-    'Access-Control-Allow-Methods': 'POST, OPTIONS'
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Content-Type': 'application/json'
   };
 
   // Handle OPTIONS request for CORS
-  if (event.httpMethod === 'OPTIONS') {
-    return {
-      statusCode: 200,
-      headers,
-      body: ''
-    };
+  if (req.method === 'OPTIONS') {
+    return new Response('', { status: 200, headers });
   }
 
   // Only allow POST
-  if (event.httpMethod !== 'POST') {
-    return {
-      statusCode: 405,
-      headers,
-      body: JSON.stringify({ error: 'Method not allowed' }),
-    };
+  if (req.method !== 'POST') {
+    return new Response(JSON.stringify({ error: 'Method not allowed' }), {
+      status: 405,
+      headers
+    });
   }
 
   try {
-    const data = JSON.parse(event.body);
+    const data = await req.json();
     const { firstName, email, phone, organization, role, inquiryType, timeline, message } = data;
 
     // Validate required fields
     if (!firstName || !email || !phone || !organization || !role || !inquiryType || !timeline) {
-      return {
-        statusCode: 400,
-        headers,
-        body: JSON.stringify({ error: 'Missing required fields' }),
-      };
+      return new Response(JSON.stringify({ error: 'Missing required fields' }), {
+        status: 400,
+        headers
+      });
     }
 
     // EMAIL A: Admin notification to office@neginrajaipourmd.com
@@ -158,22 +153,23 @@ exports.handler = async (event) => {
         stack: enrollError.stack
       });
       // Return success but include enrollment error for debugging
-      return {
-        statusCode: 200,
-        headers,
-        body: JSON.stringify({
-          success: true,
-          message: 'Inquiry submitted successfully',
-          enrollmentError: enrollError.message
-        }),
-      };
+      return new Response(JSON.stringify({
+        success: true,
+        message: 'Inquiry submitted successfully',
+        enrollmentError: enrollError.message
+      }), {
+        status: 200,
+        headers
+      });
     }
 
-    return {
-      statusCode: 200,
-      headers,
-      body: JSON.stringify({ success: true, message: 'Inquiry submitted successfully' }),
-    };
+    return new Response(JSON.stringify({
+      success: true,
+      message: 'Inquiry submitted successfully'
+    }), {
+      status: 200,
+      headers
+    });
 
   } catch (error) {
     console.error('Error processing inquiry:', error);
@@ -184,13 +180,12 @@ exports.handler = async (event) => {
       statusCode: error.statusCode,
       response: error.response
     });
-    return {
-      statusCode: 500,
-      headers,
-      body: JSON.stringify({
-        error: 'Failed to process inquiry',
-        details: error.message
-      }),
-    };
+    return new Response(JSON.stringify({
+      error: 'Failed to process inquiry',
+      details: error.message
+    }), {
+      status: 500,
+      headers
+    });
   }
 };
