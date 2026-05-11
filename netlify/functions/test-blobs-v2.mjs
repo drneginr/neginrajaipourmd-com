@@ -17,12 +17,12 @@ export default async (req, context) => {
 
     // Check NETLIFY_BLOBS_CONTEXT
     if (process.env.NETLIFY_BLOBS_CONTEXT) {
-      logs.push(`NETLIFY_BLOBS_CONTEXT: ${process.env.NETLIFY_BLOBS_CONTEXT}`);
+      logs.push('NETLIFY_BLOBS_CONTEXT exists');
 
       // Try to parse it
       try {
         const blobsContext = JSON.parse(process.env.NETLIFY_BLOBS_CONTEXT);
-        logs.push(`Parsed Blobs context: ${JSON.stringify(blobsContext)}`);
+        logs.push(`Context keys: ${Object.keys(blobsContext).join(', ')}`);
 
         // Try to use it with getStore
         logs.push('Trying getStore with context...');
