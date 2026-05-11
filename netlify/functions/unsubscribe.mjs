@@ -1,6 +1,6 @@
-const { getStore } = require('@netlify/blobs');
+import { getStore } from '@netlify/blobs';
 
-exports.handler = async (req) => {
+export default async (req, context) => {
   const url = new URL(req.url);
   const token = url.searchParams.get('token');
 
@@ -12,15 +12,22 @@ exports.handler = async (req) => {
     // Decode email from token
     const email = Buffer.from(token, 'base64').toString('utf-8');
 
-    // Update contact subscription status
-    const contactsStore = getStore('contacts');
-    const contactJson = await contactsStore.get(email);
+    // Decode NETLIFY_BLOBS_CONTEXT (base64 encoded JSON)
+    const blobsContext = JSON.parse(
+      Buffer.from(process.env.NETLIFY_BLOBS_CONTEXT, 'base64').toString('utf-8')
+    );
+    const contactsStore = getStore({
+      name: 'contacts',
+      ...blobsContext
+    });
 
-    if (!contactJson) {
+    const contactData = await contactsStore.get(email);
+
+    if (!contactData) {
       return new Response('Email not found', { status: 404 });
     }
 
-    const contact = JSON.parse(contactJson);
+    const contact = JSON.parse(contactData);
     contact.subscribed = false;
     contact.unsubscribedAt = new Date().toISOString();
 
@@ -58,10 +65,30 @@ exports.handler = async (req) => {
 
   } catch (error) {
     console.error('Unsubscribe error:', error);
-    console.error('Unsubscribe error details:', {
-      message: error.message,
-      stack: error.stack
+    return new Response(`
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>Error</title>
+        <style>
+          body {
+            font-family: 'Inter', sans-serif;
+            max-width: 600px;
+            margin: 100px auto;
+            padding: 40px;
+            text-align: center;
+            color: #1A1A1A;
+          }
+        </style>
+      </head>
+      <body>
+        <h1>Error</h1>
+        <p>There was an error processing your unsubscribe request. Please contact office@neginrajaipourmd.com for assistance.</p>
+      </body>
+      </html>
+    `, {
+      status: 500,
+      headers: { 'Content-Type': 'text/html' }
     });
-    return new Response('Error processing unsubscribe', { status: 500 });
   }
 };

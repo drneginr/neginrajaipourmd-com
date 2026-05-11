@@ -51,7 +51,7 @@ export default async (req, context) => {
     let html = baseTemplate
       .replace('{{SUBJECT}}', nextEmail.subject)
       .replace('{{BODY_CONTENT}}', nextEmail.body)
-      .replace('{{PHYSICAL_ADDRESS}}', '1615 Mater Dei Drive, Chula Vista, CA 91913')
+      .replace('{{PHYSICAL_ADDRESS}}', '2455 Otay Center Dr. Suite 117 #5041, San Diego, CA 92154')
       .replace('{{UNSUBSCRIBE_LINK}}', `https://neginrajaipourmd.com/unsubscribe?token=${contact.unsubscribeToken}`);
 
     // Send email - using sandbox to account owner

@@ -21,7 +21,7 @@ function renderEmail(bodyContent, subject, unsubscribeToken) {
 
   template = template.replace('{{SUBJECT}}', subject);
   template = template.replace('{{BODY_CONTENT}}', bodyContent);
-  template = template.replace('{{PHYSICAL_ADDRESS}}', '1615 Mater Dei Drive, Chula Vista, CA 91913');
+  template = template.replace('{{PHYSICAL_ADDRESS}}', '2455 Otay Center Dr. Suite 117 #5041, San Diego, CA 92154');
   template = template.replace('{{UNSUBSCRIBE_LINK}}', `https://neginrajaipourmd.com/unsubscribe?token=${unsubscribeToken}`);
 
   return template;
