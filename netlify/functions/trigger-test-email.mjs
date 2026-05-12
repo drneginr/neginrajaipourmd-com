@@ -9,7 +9,7 @@ export default async (req, context) => {
   const logs = [];
 
   try {
-    const TEST_EMAIL = 'admin@mye3method.com'; // Using account owner email for sandbox
+    const TEST_EMAIL = 'neginr1@yahoo.com'; // Your test email
     logs.push(`Triggering test email for ${TEST_EMAIL}`);
 
     // Get contact from Blobs
@@ -54,9 +54,9 @@ export default async (req, context) => {
       .replace('{{PHYSICAL_ADDRESS}}', '2455 Otay Center Dr. Suite 117 #5041, San Diego, CA 92154')
       .replace('{{UNSUBSCRIBE_LINK}}', `https://neginrajaipourmd.com/unsubscribe?token=${contact.unsubscribeToken}`);
 
-    // Send email - using sandbox to account owner
+    // Send email from verified domain
     const emailResult = await resend.emails.send({
-      from: 'Dr. Negin Rajaipour <onboarding@resend.dev>',
+      from: 'Dr. Negin Rajaipour <office@neginrajaipourmd.com>',
       to: contact.email,
       subject: nextEmail.subject,
       html
