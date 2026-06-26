@@ -1193,13 +1193,15 @@ select {
   }
 
   .hero-horizontal {
-    height: 80vh;
+    height: auto;
+    min-height: 85vh;
+    padding-top: 80px;
   }
 
   .hero-photo-backdrop {
     width: 100%;
     height: 40vh;
-    top: 0;
+    top: 80px;
     left: 0;
   }
 
@@ -1209,7 +1211,7 @@ select {
 
   .hero-content-overlay {
     align-items: flex-end;
-    padding: 2rem 1.5rem 2rem 24px;
+    padding: 2rem 1.5rem 2rem 1.5rem;
   }
 
   .hero-text-container {
